@@ -5,7 +5,7 @@ import thunk from  "redux-thunk"
 import reducer from './reducer'
 
 let middleware;
-if(window.location.host == "localhost:3000") {
+if(window.location.host == "localhost:3002") {
 	middleware = applyMiddleware(thunk, logger());
 } else {
 	middleware = applyMiddleware(thunk);

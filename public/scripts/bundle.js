@@ -83,7 +83,8 @@
 		_react2.default.createElement(
 			_reactRouter.Router,
 			{ history: history },
-			_react2.default.createElement(_reactRouter.Route, { path: '/', component: _homePage2.default })
+			_react2.default.createElement(_reactRouter.Route, { path: '/', component: _homePage2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/users/verifiedState', component: _homePage2.default })
 		)
 	), app);
 
@@ -21997,7 +21998,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var middleware = void 0;
-	if (window.location.host == "localhost:3000") {
+	if (window.location.host == "localhost:3002") {
 		middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)());
 	} else {
 		middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default);
