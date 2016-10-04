@@ -19,19 +19,3 @@ gulp.task('style', ()=> {
 gulp.task('style:watch', ()=> {
   gulp.watch('./sass/*.scss', ['style']);
 });
-
-/* == DEV DEPLOYMENT == */
-gulp.task('dev-deploy', ()=> {
-	
-	let publisher = awspublish.create({
-	  region: 'us-west-1',
-	  params: {
-	    Bucket: 'dev-web.oomamiapp.com'
-	  }
-	});
-
-	return gulp.src(['./views/index.html','./public/scripts/bundle.js','./public/styles/main.css'])
-	  .pipe(awspublish.gzip({ ext: '.gz' }))
-	  .pipe(publisher.publish()) 
-	  .pipe(awspublish.reporter());
-});

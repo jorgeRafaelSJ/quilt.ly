@@ -14,7 +14,6 @@ ReactDOM.render((
 	<Provider store={ store }> 
 	  <Router history={ history }>
 	   	<Route path="/" component={ HomePage }/>	
-	   	<Route path="/users/verifiedState" component={ HomePage }/>	
 	  </Router>
   </Provider> 
 ), app);
