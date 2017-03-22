@@ -61,13 +61,13 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 195);
+	var _reactRedux = __webpack_require__(/*! react-redux */ 292);
 	
-	var _reactRouter = __webpack_require__(/*! react-router */ 208);
+	var _reactRouter = __webpack_require__(/*! react-router */ 305);
 	
 	var _reactRouterRedux = __webpack_require__(/*! react-router-redux */ 190);
 	
-	var _homePage = __webpack_require__(/*! ./home/components/home-page */ 272);
+	var _homePage = __webpack_require__(/*! ./home/components/home-page */ 368);
 	
 	var _homePage2 = _interopRequireDefault(_homePage);
 	
@@ -83,8 +83,7 @@
 		_react2.default.createElement(
 			_reactRouter.Router,
 			{ history: history },
-			_react2.default.createElement(_reactRouter.Route, { path: '/', component: _homePage2.default }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/users/verifiedState', component: _homePage2.default })
+			_react2.default.createElement(_reactRouter.Route, { path: '/', component: _homePage2.default })
 		)
 	), app);
 
@@ -23195,16 +23194,16 @@
 	
 	var _reactRouterRedux = __webpack_require__(/*! react-router-redux */ 190);
 	
-	var _reducer = __webpack_require__(/*! ./home/reducer.js */ 271);
+	var _redux2 = __webpack_require__(/*! ./home/redux */ 195);
 	
-	var _reducer2 = _interopRequireDefault(_reducer);
+	var _redux3 = _interopRequireDefault(_redux2);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// combines all the reducers into one main reducer object passed into the store.js
 	var appReducer = (0, _redux.combineReducers)({
 		routing: _reactRouterRedux.routerReducer,
-		home: _reducer2.default
+		home: _redux3.default
 	});
 	
 	var rootReducer = function rootReducer(state, action) {
@@ -23594,6 +23593,3759 @@
 
 /***/ },
 /* 195 */
+/*!***************************!*\
+  !*** ./app/home/redux.js ***!
+  \***************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.setUser = exports.sayHello = undefined;
+	
+	var _handleActions;
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _reduxActions = __webpack_require__(/*! redux-actions */ 196);
+	
+	var _reactRouterRedux = __webpack_require__(/*! react-router-redux */ 190);
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	/* ============================================================================
+	REDUCER INIT VALUE
+	============================================================================= */
+	var init = {
+		user: '',
+		hello: false
+	};
+	
+	/* ============================================================================
+	ACTIONS CONSTANTS
+	============================================================================= */
+	
+	var SAY_HELLO = 'home/SAY_HELLO';
+	var SET_USER = 'home/SET_USER';
+	
+	/* ============================================================================
+	ACTIONS - ACTION CREATORS
+	============================================================================= */
+	var sayHello = exports.sayHello = (0, _reduxActions.createAction)(SAY_HELLO);
+	
+	var setUser = exports.setUser = (0, _reduxActions.createAction)(SET_USER);
+	
+	/* ============================================================================
+	REDUCER --- ACTION HANDLER
+	============================================================================= */
+	
+	exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _defineProperty(_handleActions, SAY_HELLO, function (state) {
+		return _extends({}, state, {
+			hello: true
+		});
+	}), _defineProperty(_handleActions, SET_USER, function (state, action) {
+		return _extends({}, state, {
+			user: action.payload.user
+		});
+	}), _handleActions), init);
+
+/***/ },
+/* 196 */
+/*!**************************************!*\
+  !*** ./~/redux-actions/lib/index.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.combineActions = exports.handleActions = exports.handleAction = exports.createActions = exports.createAction = undefined;
+	
+	var _createAction = __webpack_require__(/*! ./createAction */ 197);
+	
+	var _createAction2 = _interopRequireDefault(_createAction);
+	
+	var _handleAction = __webpack_require__(/*! ./handleAction */ 210);
+	
+	var _handleAction2 = _interopRequireDefault(_handleAction);
+	
+	var _handleActions = __webpack_require__(/*! ./handleActions */ 264);
+	
+	var _handleActions2 = _interopRequireDefault(_handleActions);
+	
+	var _combineActions = __webpack_require__(/*! ./combineActions */ 248);
+	
+	var _combineActions2 = _interopRequireDefault(_combineActions);
+	
+	var _createActions = __webpack_require__(/*! ./createActions */ 267);
+	
+	var _createActions2 = _interopRequireDefault(_createActions);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.createAction = _createAction2.default;
+	exports.createActions = _createActions2.default;
+	exports.handleAction = _handleAction2.default;
+	exports.handleActions = _handleActions2.default;
+	exports.combineActions = _combineActions2.default;
+
+/***/ },
+/* 197 */
+/*!*********************************************!*\
+  !*** ./~/redux-actions/lib/createAction.js ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = createAction;
+	
+	var _identity = __webpack_require__(/*! lodash/identity */ 198);
+	
+	var _identity2 = _interopRequireDefault(_identity);
+	
+	var _isFunction = __webpack_require__(/*! lodash/isFunction */ 199);
+	
+	var _isFunction2 = _interopRequireDefault(_isFunction);
+	
+	var _isUndefined = __webpack_require__(/*! lodash/isUndefined */ 207);
+	
+	var _isUndefined2 = _interopRequireDefault(_isUndefined);
+	
+	var _isNull = __webpack_require__(/*! lodash/isNull */ 208);
+	
+	var _isNull2 = _interopRequireDefault(_isNull);
+	
+	var _invariant = __webpack_require__(/*! invariant */ 209);
+	
+	var _invariant2 = _interopRequireDefault(_invariant);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function createAction(type) {
+	  var payloadCreator = arguments.length <= 1 || arguments[1] === undefined ? _identity2.default : arguments[1];
+	  var metaCreator = arguments[2];
+	
+	  (0, _invariant2.default)((0, _isFunction2.default)(payloadCreator) || (0, _isNull2.default)(payloadCreator), 'Expected payloadCreator to be a function, undefined or null');
+	
+	  var finalPayloadCreator = (0, _isNull2.default)(payloadCreator) ? _identity2.default : payloadCreator;
+	
+	  var actionCreator = function actionCreator() {
+	    var hasError = (arguments.length <= 0 ? undefined : arguments[0]) instanceof Error;
+	
+	    var action = {
+	      type: type
+	    };
+	
+	    var payload = hasError ? arguments.length <= 0 ? undefined : arguments[0] : finalPayloadCreator.apply(undefined, arguments);
+	    if (!(0, _isUndefined2.default)(payload)) {
+	      action.payload = payload;
+	    }
+	
+	    if (hasError || payload instanceof Error) {
+	      // Handle FSA errors where the payload is an Error object. Set error.
+	      action.error = true;
+	    }
+	
+	    if ((0, _isFunction2.default)(metaCreator)) {
+	      action.meta = metaCreator.apply(undefined, arguments);
+	    }
+	
+	    return action;
+	  };
+	
+	  actionCreator.toString = function () {
+	    return type.toString();
+	  };
+	
+	  return actionCreator;
+	}
+
+/***/ },
+/* 198 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/identity.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns the first argument it receives.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Util
+	 * @param {*} value Any value.
+	 * @returns {*} Returns `value`.
+	 * @example
+	 *
+	 * var object = { 'a': 1 };
+	 *
+	 * console.log(_.identity(object) === object);
+	 * // => true
+	 */
+	function identity(value) {
+	  return value;
+	}
+	
+	module.exports = identity;
+
+
+/***/ },
+/* 199 */
+/*!************************************************!*\
+  !*** ./~/redux-actions/~/lodash/isFunction.js ***!
+  \************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 200),
+	    isObject = __webpack_require__(/*! ./isObject */ 206);
+	
+	/** `Object#toString` result references. */
+	var asyncTag = '[object AsyncFunction]',
+	    funcTag = '[object Function]',
+	    genTag = '[object GeneratorFunction]',
+	    proxyTag = '[object Proxy]';
+	
+	/**
+	 * Checks if `value` is classified as a `Function` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 *
+	 * _.isFunction(/abc/);
+	 * // => false
+	 */
+	function isFunction(value) {
+	  if (!isObject(value)) {
+	    return false;
+	  }
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in Safari 9 which returns 'object' for typed arrays and other constructors.
+	  var tag = baseGetTag(value);
+	  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+	}
+	
+	module.exports = isFunction;
+
+
+/***/ },
+/* 200 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseGetTag.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(/*! ./_Symbol */ 201),
+	    getRawTag = __webpack_require__(/*! ./_getRawTag */ 204),
+	    objectToString = __webpack_require__(/*! ./_objectToString */ 205);
+	
+	/** `Object#toString` result references. */
+	var nullTag = '[object Null]',
+	    undefinedTag = '[object Undefined]';
+	
+	/** Built-in value references. */
+	var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+	
+	/**
+	 * The base implementation of `getTag` without fallbacks for buggy environments.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the `toStringTag`.
+	 */
+	function baseGetTag(value) {
+	  if (value == null) {
+	    return value === undefined ? undefinedTag : nullTag;
+	  }
+	  return (symToStringTag && symToStringTag in Object(value))
+	    ? getRawTag(value)
+	    : objectToString(value);
+	}
+	
+	module.exports = baseGetTag;
+
+
+/***/ },
+/* 201 */
+/*!*********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_Symbol.js ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(/*! ./_root */ 202);
+	
+	/** Built-in value references. */
+	var Symbol = root.Symbol;
+	
+	module.exports = Symbol;
+
+
+/***/ },
+/* 202 */
+/*!*******************************************!*\
+  !*** ./~/redux-actions/~/lodash/_root.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ 203);
+	
+	/** Detect free variable `self`. */
+	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+	
+	/** Used as a reference to the global object. */
+	var root = freeGlobal || freeSelf || Function('return this')();
+	
+	module.exports = root;
+
+
+/***/ },
+/* 203 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_freeGlobal.js ***!
+  \*************************************************/
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
+	var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+	
+	module.exports = freeGlobal;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 204 */
+/*!************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_getRawTag.js ***!
+  \************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(/*! ./_Symbol */ 201);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var nativeObjectToString = objectProto.toString;
+	
+	/** Built-in value references. */
+	var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+	
+	/**
+	 * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the raw `toStringTag`.
+	 */
+	function getRawTag(value) {
+	  var isOwn = hasOwnProperty.call(value, symToStringTag),
+	      tag = value[symToStringTag];
+	
+	  try {
+	    value[symToStringTag] = undefined;
+	    var unmasked = true;
+	  } catch (e) {}
+	
+	  var result = nativeObjectToString.call(value);
+	  if (unmasked) {
+	    if (isOwn) {
+	      value[symToStringTag] = tag;
+	    } else {
+	      delete value[symToStringTag];
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = getRawTag;
+
+
+/***/ },
+/* 205 */
+/*!*****************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_objectToString.js ***!
+  \*****************************************************/
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var nativeObjectToString = objectProto.toString;
+	
+	/**
+	 * Converts `value` to a string using `Object.prototype.toString`.
+	 *
+	 * @private
+	 * @param {*} value The value to convert.
+	 * @returns {string} Returns the converted string.
+	 */
+	function objectToString(value) {
+	  return nativeObjectToString.call(value);
+	}
+	
+	module.exports = objectToString;
+
+
+/***/ },
+/* 206 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/isObject.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is the
+	 * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+	 * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(_.noop);
+	 * // => true
+	 *
+	 * _.isObject(null);
+	 * // => false
+	 */
+	function isObject(value) {
+	  var type = typeof value;
+	  return value != null && (type == 'object' || type == 'function');
+	}
+	
+	module.exports = isObject;
+
+
+/***/ },
+/* 207 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/isUndefined.js ***!
+  \*************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is `undefined`.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is `undefined`, else `false`.
+	 * @example
+	 *
+	 * _.isUndefined(void 0);
+	 * // => true
+	 *
+	 * _.isUndefined(null);
+	 * // => false
+	 */
+	function isUndefined(value) {
+	  return value === undefined;
+	}
+	
+	module.exports = isUndefined;
+
+
+/***/ },
+/* 208 */
+/*!********************************************!*\
+  !*** ./~/redux-actions/~/lodash/isNull.js ***!
+  \********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is `null`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is `null`, else `false`.
+	 * @example
+	 *
+	 * _.isNull(null);
+	 * // => true
+	 *
+	 * _.isNull(void 0);
+	 * // => false
+	 */
+	function isNull(value) {
+	  return value === null;
+	}
+	
+	module.exports = isNull;
+
+
+/***/ },
+/* 209 */
+/*!************************************************!*\
+  !*** ./~/redux-actions/~/invariant/browser.js ***!
+  \************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	'use strict';
+	
+	/**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+	
+	var invariant = function(condition, format, a, b, c, d, e, f) {
+	  if (process.env.NODE_ENV !== 'production') {
+	    if (format === undefined) {
+	      throw new Error('invariant requires an error message argument');
+	    }
+	  }
+	
+	  if (!condition) {
+	    var error;
+	    if (format === undefined) {
+	      error = new Error(
+	        'Minified exception occurred; use the non-minified dev environment ' +
+	        'for the full error message and additional helpful warnings.'
+	      );
+	    } else {
+	      var args = [a, b, c, d, e, f];
+	      var argIndex = 0;
+	      error = new Error(
+	        format.replace(/%s/g, function() { return args[argIndex++]; })
+	      );
+	      error.name = 'Invariant Violation';
+	    }
+	
+	    error.framesToPop = 1; // we don't care about invariant's own frame
+	    throw error;
+	  }
+	};
+	
+	module.exports = invariant;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
+
+/***/ },
+/* 210 */
+/*!*********************************************!*\
+  !*** ./~/redux-actions/lib/handleAction.js ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+	exports.default = handleAction;
+	
+	var _isFunction = __webpack_require__(/*! lodash/isFunction */ 199);
+	
+	var _isFunction2 = _interopRequireDefault(_isFunction);
+	
+	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 211);
+	
+	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+	
+	var _identity = __webpack_require__(/*! lodash/identity */ 198);
+	
+	var _identity2 = _interopRequireDefault(_identity);
+	
+	var _isNil = __webpack_require__(/*! lodash/isNil */ 215);
+	
+	var _isNil2 = _interopRequireDefault(_isNil);
+	
+	var _isUndefined = __webpack_require__(/*! lodash/isUndefined */ 207);
+	
+	var _isUndefined2 = _interopRequireDefault(_isUndefined);
+	
+	var _includes = __webpack_require__(/*! lodash/includes */ 216);
+	
+	var _includes2 = _interopRequireDefault(_includes);
+	
+	var _invariant = __webpack_require__(/*! invariant */ 209);
+	
+	var _invariant2 = _interopRequireDefault(_invariant);
+	
+	var _combineActions = __webpack_require__(/*! ./combineActions */ 248);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function handleAction(type) {
+	  var reducer = arguments.length <= 1 || arguments[1] === undefined ? _identity2.default : arguments[1];
+	  var defaultState = arguments[2];
+	
+	  var types = type.toString().split(_combineActions.ACTION_TYPE_DELIMITER);
+	  (0, _invariant2.default)(!(0, _isUndefined2.default)(defaultState), 'defaultState for reducer handling ' + types.join(', ') + ' should be defined');
+	  (0, _invariant2.default)((0, _isFunction2.default)(reducer) || (0, _isPlainObject2.default)(reducer), 'Expected reducer to be a function or object with next and throw reducers');
+	
+	  var _ref = (0, _isFunction2.default)(reducer) ? [reducer, reducer] : [reducer.next, reducer.throw].map(function (aReducer) {
+	    return (0, _isNil2.default)(aReducer) ? _identity2.default : aReducer;
+	  });
+	
+	  var _ref2 = _slicedToArray(_ref, 2);
+	
+	  var nextReducer = _ref2[0];
+	  var throwReducer = _ref2[1];
+	
+	
+	  return function () {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? defaultState : arguments[0];
+	    var action = arguments[1];
+	    var actionType = action.type;
+	
+	    if (!actionType || !(0, _includes2.default)(types, actionType.toString())) {
+	      return state;
+	    }
+	
+	    return (action.error === true ? throwReducer : nextReducer)(state, action);
+	  };
+	}
+
+/***/ },
+/* 211 */
+/*!***************************************************!*\
+  !*** ./~/redux-actions/~/lodash/isPlainObject.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 200),
+	    getPrototype = __webpack_require__(/*! ./_getPrototype */ 212),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 214);
+	
+	/** `Object#toString` result references. */
+	var objectTag = '[object Object]';
+	
+	/** Used for built-in method references. */
+	var funcProto = Function.prototype,
+	    objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Used to infer the `Object` constructor. */
+	var objectCtorString = funcToString.call(Object);
+	
+	/**
+	 * Checks if `value` is a plain object, that is, an object created by the
+	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.8.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 * }
+	 *
+	 * _.isPlainObject(new Foo);
+	 * // => false
+	 *
+	 * _.isPlainObject([1, 2, 3]);
+	 * // => false
+	 *
+	 * _.isPlainObject({ 'x': 0, 'y': 0 });
+	 * // => true
+	 *
+	 * _.isPlainObject(Object.create(null));
+	 * // => true
+	 */
+	function isPlainObject(value) {
+	  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
+	    return false;
+	  }
+	  var proto = getPrototype(value);
+	  if (proto === null) {
+	    return true;
+	  }
+	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+	  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+	    funcToString.call(Ctor) == objectCtorString;
+	}
+	
+	module.exports = isPlainObject;
+
+
+/***/ },
+/* 212 */
+/*!***************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_getPrototype.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var overArg = __webpack_require__(/*! ./_overArg */ 213);
+	
+	/** Built-in value references. */
+	var getPrototype = overArg(Object.getPrototypeOf, Object);
+	
+	module.exports = getPrototype;
+
+
+/***/ },
+/* 213 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_overArg.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a unary function that invokes `func` with its argument transformed.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {Function} transform The argument transform.
+	 * @returns {Function} Returns the new function.
+	 */
+	function overArg(func, transform) {
+	  return function(arg) {
+	    return func(transform(arg));
+	  };
+	}
+	
+	module.exports = overArg;
+
+
+/***/ },
+/* 214 */
+/*!**************************************************!*\
+  !*** ./~/redux-actions/~/lodash/isObjectLike.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return value != null && typeof value == 'object';
+	}
+	
+	module.exports = isObjectLike;
+
+
+/***/ },
+/* 215 */
+/*!*******************************************!*\
+  !*** ./~/redux-actions/~/lodash/isNil.js ***!
+  \*******************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is `null` or `undefined`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is nullish, else `false`.
+	 * @example
+	 *
+	 * _.isNil(null);
+	 * // => true
+	 *
+	 * _.isNil(void 0);
+	 * // => true
+	 *
+	 * _.isNil(NaN);
+	 * // => false
+	 */
+	function isNil(value) {
+	  return value == null;
+	}
+	
+	module.exports = isNil;
+
+
+/***/ },
+/* 216 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/includes.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIndexOf = __webpack_require__(/*! ./_baseIndexOf */ 217),
+	    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 221),
+	    isString = __webpack_require__(/*! ./isString */ 223),
+	    toInteger = __webpack_require__(/*! ./toInteger */ 225),
+	    values = __webpack_require__(/*! ./values */ 229);
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max;
+	
+	/**
+	 * Checks if `value` is in `collection`. If `collection` is a string, it's
+	 * checked for a substring of `value`, otherwise
+	 * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * is used for equality comparisons. If `fromIndex` is negative, it's used as
+	 * the offset from the end of `collection`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Collection
+	 * @param {Array|Object|string} collection The collection to inspect.
+	 * @param {*} value The value to search for.
+	 * @param {number} [fromIndex=0] The index to search from.
+	 * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
+	 * @returns {boolean} Returns `true` if `value` is found, else `false`.
+	 * @example
+	 *
+	 * _.includes([1, 2, 3], 1);
+	 * // => true
+	 *
+	 * _.includes([1, 2, 3], 1, 2);
+	 * // => false
+	 *
+	 * _.includes({ 'a': 1, 'b': 2 }, 1);
+	 * // => true
+	 *
+	 * _.includes('abcd', 'bc');
+	 * // => true
+	 */
+	function includes(collection, value, fromIndex, guard) {
+	  collection = isArrayLike(collection) ? collection : values(collection);
+	  fromIndex = (fromIndex && !guard) ? toInteger(fromIndex) : 0;
+	
+	  var length = collection.length;
+	  if (fromIndex < 0) {
+	    fromIndex = nativeMax(length + fromIndex, 0);
+	  }
+	  return isString(collection)
+	    ? (fromIndex <= length && collection.indexOf(value, fromIndex) > -1)
+	    : (!!length && baseIndexOf(collection, value, fromIndex) > -1);
+	}
+	
+	module.exports = includes;
+
+
+/***/ },
+/* 217 */
+/*!**************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseIndexOf.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseFindIndex = __webpack_require__(/*! ./_baseFindIndex */ 218),
+	    baseIsNaN = __webpack_require__(/*! ./_baseIsNaN */ 219),
+	    strictIndexOf = __webpack_require__(/*! ./_strictIndexOf */ 220);
+	
+	/**
+	 * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+	 *
+	 * @private
+	 * @param {Array} array The array to inspect.
+	 * @param {*} value The value to search for.
+	 * @param {number} fromIndex The index to search from.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function baseIndexOf(array, value, fromIndex) {
+	  return value === value
+	    ? strictIndexOf(array, value, fromIndex)
+	    : baseFindIndex(array, baseIsNaN, fromIndex);
+	}
+	
+	module.exports = baseIndexOf;
+
+
+/***/ },
+/* 218 */
+/*!****************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseFindIndex.js ***!
+  \****************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.findIndex` and `_.findLastIndex` without
+	 * support for iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} array The array to inspect.
+	 * @param {Function} predicate The function invoked per iteration.
+	 * @param {number} fromIndex The index to search from.
+	 * @param {boolean} [fromRight] Specify iterating from right to left.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function baseFindIndex(array, predicate, fromIndex, fromRight) {
+	  var length = array.length,
+	      index = fromIndex + (fromRight ? 1 : -1);
+	
+	  while ((fromRight ? index-- : ++index < length)) {
+	    if (predicate(array[index], index, array)) {
+	      return index;
+	    }
+	  }
+	  return -1;
+	}
+	
+	module.exports = baseFindIndex;
+
+
+/***/ },
+/* 219 */
+/*!************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseIsNaN.js ***!
+  \************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.isNaN` without support for number objects.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+	 */
+	function baseIsNaN(value) {
+	  return value !== value;
+	}
+	
+	module.exports = baseIsNaN;
+
+
+/***/ },
+/* 220 */
+/*!****************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_strictIndexOf.js ***!
+  \****************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.indexOf` which performs strict equality
+	 * comparisons of values, i.e. `===`.
+	 *
+	 * @private
+	 * @param {Array} array The array to inspect.
+	 * @param {*} value The value to search for.
+	 * @param {number} fromIndex The index to search from.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function strictIndexOf(array, value, fromIndex) {
+	  var index = fromIndex - 1,
+	      length = array.length;
+	
+	  while (++index < length) {
+	    if (array[index] === value) {
+	      return index;
+	    }
+	  }
+	  return -1;
+	}
+	
+	module.exports = strictIndexOf;
+
+
+/***/ },
+/* 221 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/isArrayLike.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var isFunction = __webpack_require__(/*! ./isFunction */ 199),
+	    isLength = __webpack_require__(/*! ./isLength */ 222);
+	
+	/**
+	 * Checks if `value` is array-like. A value is considered array-like if it's
+	 * not a function and has a `value.length` that's an integer greater than or
+	 * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+	 * @example
+	 *
+	 * _.isArrayLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLike(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLike('abc');
+	 * // => true
+	 *
+	 * _.isArrayLike(_.noop);
+	 * // => false
+	 */
+	function isArrayLike(value) {
+	  return value != null && isLength(value.length) && !isFunction(value);
+	}
+	
+	module.exports = isArrayLike;
+
+
+/***/ },
+/* 222 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/isLength.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+	
+	/**
+	 * Checks if `value` is a valid array-like length.
+	 *
+	 * **Note:** This method is loosely based on
+	 * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+	 * @example
+	 *
+	 * _.isLength(3);
+	 * // => true
+	 *
+	 * _.isLength(Number.MIN_VALUE);
+	 * // => false
+	 *
+	 * _.isLength(Infinity);
+	 * // => false
+	 *
+	 * _.isLength('3');
+	 * // => false
+	 */
+	function isLength(value) {
+	  return typeof value == 'number' &&
+	    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	}
+	
+	module.exports = isLength;
+
+
+/***/ },
+/* 223 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/isString.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 200),
+	    isArray = __webpack_require__(/*! ./isArray */ 224),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 214);
+	
+	/** `Object#toString` result references. */
+	var stringTag = '[object String]';
+	
+	/**
+	 * Checks if `value` is classified as a `String` primitive or object.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a string, else `false`.
+	 * @example
+	 *
+	 * _.isString('abc');
+	 * // => true
+	 *
+	 * _.isString(1);
+	 * // => false
+	 */
+	function isString(value) {
+	  return typeof value == 'string' ||
+	    (!isArray(value) && isObjectLike(value) && baseGetTag(value) == stringTag);
+	}
+	
+	module.exports = isString;
+
+
+/***/ },
+/* 224 */
+/*!*********************************************!*\
+  !*** ./~/redux-actions/~/lodash/isArray.js ***!
+  \*********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is classified as an `Array` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+	 * @example
+	 *
+	 * _.isArray([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArray(document.body.children);
+	 * // => false
+	 *
+	 * _.isArray('abc');
+	 * // => false
+	 *
+	 * _.isArray(_.noop);
+	 * // => false
+	 */
+	var isArray = Array.isArray;
+	
+	module.exports = isArray;
+
+
+/***/ },
+/* 225 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/toInteger.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var toFinite = __webpack_require__(/*! ./toFinite */ 226);
+	
+	/**
+	 * Converts `value` to an integer.
+	 *
+	 * **Note:** This method is loosely based on
+	 * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to convert.
+	 * @returns {number} Returns the converted integer.
+	 * @example
+	 *
+	 * _.toInteger(3.2);
+	 * // => 3
+	 *
+	 * _.toInteger(Number.MIN_VALUE);
+	 * // => 0
+	 *
+	 * _.toInteger(Infinity);
+	 * // => 1.7976931348623157e+308
+	 *
+	 * _.toInteger('3.2');
+	 * // => 3
+	 */
+	function toInteger(value) {
+	  var result = toFinite(value),
+	      remainder = result % 1;
+	
+	  return result === result ? (remainder ? result - remainder : result) : 0;
+	}
+	
+	module.exports = toInteger;
+
+
+/***/ },
+/* 226 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/toFinite.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var toNumber = __webpack_require__(/*! ./toNumber */ 227);
+	
+	/** Used as references for various `Number` constants. */
+	var INFINITY = 1 / 0,
+	    MAX_INTEGER = 1.7976931348623157e+308;
+	
+	/**
+	 * Converts `value` to a finite number.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.12.0
+	 * @category Lang
+	 * @param {*} value The value to convert.
+	 * @returns {number} Returns the converted number.
+	 * @example
+	 *
+	 * _.toFinite(3.2);
+	 * // => 3.2
+	 *
+	 * _.toFinite(Number.MIN_VALUE);
+	 * // => 5e-324
+	 *
+	 * _.toFinite(Infinity);
+	 * // => 1.7976931348623157e+308
+	 *
+	 * _.toFinite('3.2');
+	 * // => 3.2
+	 */
+	function toFinite(value) {
+	  if (!value) {
+	    return value === 0 ? value : 0;
+	  }
+	  value = toNumber(value);
+	  if (value === INFINITY || value === -INFINITY) {
+	    var sign = (value < 0 ? -1 : 1);
+	    return sign * MAX_INTEGER;
+	  }
+	  return value === value ? value : 0;
+	}
+	
+	module.exports = toFinite;
+
+
+/***/ },
+/* 227 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/toNumber.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(/*! ./isObject */ 206),
+	    isSymbol = __webpack_require__(/*! ./isSymbol */ 228);
+	
+	/** Used as references for various `Number` constants. */
+	var NAN = 0 / 0;
+	
+	/** Used to match leading and trailing whitespace. */
+	var reTrim = /^\s+|\s+$/g;
+	
+	/** Used to detect bad signed hexadecimal string values. */
+	var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+	
+	/** Used to detect binary string values. */
+	var reIsBinary = /^0b[01]+$/i;
+	
+	/** Used to detect octal string values. */
+	var reIsOctal = /^0o[0-7]+$/i;
+	
+	/** Built-in method references without a dependency on `root`. */
+	var freeParseInt = parseInt;
+	
+	/**
+	 * Converts `value` to a number.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to process.
+	 * @returns {number} Returns the number.
+	 * @example
+	 *
+	 * _.toNumber(3.2);
+	 * // => 3.2
+	 *
+	 * _.toNumber(Number.MIN_VALUE);
+	 * // => 5e-324
+	 *
+	 * _.toNumber(Infinity);
+	 * // => Infinity
+	 *
+	 * _.toNumber('3.2');
+	 * // => 3.2
+	 */
+	function toNumber(value) {
+	  if (typeof value == 'number') {
+	    return value;
+	  }
+	  if (isSymbol(value)) {
+	    return NAN;
+	  }
+	  if (isObject(value)) {
+	    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+	    value = isObject(other) ? (other + '') : other;
+	  }
+	  if (typeof value != 'string') {
+	    return value === 0 ? value : +value;
+	  }
+	  value = value.replace(reTrim, '');
+	  var isBinary = reIsBinary.test(value);
+	  return (isBinary || reIsOctal.test(value))
+	    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+	    : (reIsBadHex.test(value) ? NAN : +value);
+	}
+	
+	module.exports = toNumber;
+
+
+/***/ },
+/* 228 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/isSymbol.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 200),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 214);
+	
+	/** `Object#toString` result references. */
+	var symbolTag = '[object Symbol]';
+	
+	/**
+	 * Checks if `value` is classified as a `Symbol` primitive or object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+	 * @example
+	 *
+	 * _.isSymbol(Symbol.iterator);
+	 * // => true
+	 *
+	 * _.isSymbol('abc');
+	 * // => false
+	 */
+	function isSymbol(value) {
+	  return typeof value == 'symbol' ||
+	    (isObjectLike(value) && baseGetTag(value) == symbolTag);
+	}
+	
+	module.exports = isSymbol;
+
+
+/***/ },
+/* 229 */
+/*!********************************************!*\
+  !*** ./~/redux-actions/~/lodash/values.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseValues = __webpack_require__(/*! ./_baseValues */ 230),
+	    keys = __webpack_require__(/*! ./keys */ 232);
+	
+	/**
+	 * Creates an array of the own enumerable string keyed property values of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property values.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.values(new Foo);
+	 * // => [1, 2] (iteration order is not guaranteed)
+	 *
+	 * _.values('hi');
+	 * // => ['h', 'i']
+	 */
+	function values(object) {
+	  return object == null ? [] : baseValues(object, keys(object));
+	}
+	
+	module.exports = values;
+
+
+/***/ },
+/* 230 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseValues.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayMap = __webpack_require__(/*! ./_arrayMap */ 231);
+	
+	/**
+	 * The base implementation of `_.values` and `_.valuesIn` which creates an
+	 * array of `object` property values corresponding to the property names
+	 * of `props`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array} props The property names to get values for.
+	 * @returns {Object} Returns the array of property values.
+	 */
+	function baseValues(object, props) {
+	  return arrayMap(props, function(key) {
+	    return object[key];
+	  });
+	}
+	
+	module.exports = baseValues;
+
+
+/***/ },
+/* 231 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_arrayMap.js ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.map` for arrays without support for iteratee
+	 * shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the new mapped array.
+	 */
+	function arrayMap(array, iteratee) {
+	  var index = -1,
+	      length = array == null ? 0 : array.length,
+	      result = Array(length);
+	
+	  while (++index < length) {
+	    result[index] = iteratee(array[index], index, array);
+	  }
+	  return result;
+	}
+	
+	module.exports = arrayMap;
+
+
+/***/ },
+/* 232 */
+/*!******************************************!*\
+  !*** ./~/redux-actions/~/lodash/keys.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ 233),
+	    baseKeys = __webpack_require__(/*! ./_baseKeys */ 245),
+	    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 221);
+	
+	/**
+	 * Creates an array of the own enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects. See the
+	 * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+	 * for more details.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keys(new Foo);
+	 * // => ['a', 'b'] (iteration order is not guaranteed)
+	 *
+	 * _.keys('hi');
+	 * // => ['0', '1']
+	 */
+	function keys(object) {
+	  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+	}
+	
+	module.exports = keys;
+
+
+/***/ },
+/* 233 */
+/*!****************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_arrayLikeKeys.js ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseTimes = __webpack_require__(/*! ./_baseTimes */ 234),
+	    isArguments = __webpack_require__(/*! ./isArguments */ 235),
+	    isArray = __webpack_require__(/*! ./isArray */ 224),
+	    isBuffer = __webpack_require__(/*! ./isBuffer */ 237),
+	    isIndex = __webpack_require__(/*! ./_isIndex */ 240),
+	    isTypedArray = __webpack_require__(/*! ./isTypedArray */ 241);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Creates an array of the enumerable property names of the array-like `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @param {boolean} inherited Specify returning inherited property names.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function arrayLikeKeys(value, inherited) {
+	  var isArr = isArray(value),
+	      isArg = !isArr && isArguments(value),
+	      isBuff = !isArr && !isArg && isBuffer(value),
+	      isType = !isArr && !isArg && !isBuff && isTypedArray(value),
+	      skipIndexes = isArr || isArg || isBuff || isType,
+	      result = skipIndexes ? baseTimes(value.length, String) : [],
+	      length = result.length;
+	
+	  for (var key in value) {
+	    if ((inherited || hasOwnProperty.call(value, key)) &&
+	        !(skipIndexes && (
+	           // Safari 9 has enumerable `arguments.length` in strict mode.
+	           key == 'length' ||
+	           // Node.js 0.10 has enumerable non-index properties on buffers.
+	           (isBuff && (key == 'offset' || key == 'parent')) ||
+	           // PhantomJS 2 has enumerable non-index properties on typed arrays.
+	           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
+	           // Skip index properties.
+	           isIndex(key, length)
+	        ))) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = arrayLikeKeys;
+
+
+/***/ },
+/* 234 */
+/*!************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseTimes.js ***!
+  \************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.times` without support for iteratee shorthands
+	 * or max array length checks.
+	 *
+	 * @private
+	 * @param {number} n The number of times to invoke `iteratee`.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the array of results.
+	 */
+	function baseTimes(n, iteratee) {
+	  var index = -1,
+	      result = Array(n);
+	
+	  while (++index < n) {
+	    result[index] = iteratee(index);
+	  }
+	  return result;
+	}
+	
+	module.exports = baseTimes;
+
+
+/***/ },
+/* 235 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/isArguments.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ 236),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 214);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+	
+	/**
+	 * Checks if `value` is likely an `arguments` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+	 *  else `false`.
+	 * @example
+	 *
+	 * _.isArguments(function() { return arguments; }());
+	 * // => true
+	 *
+	 * _.isArguments([1, 2, 3]);
+	 * // => false
+	 */
+	var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
+	  return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
+	    !propertyIsEnumerable.call(value, 'callee');
+	};
+	
+	module.exports = isArguments;
+
+
+/***/ },
+/* 236 */
+/*!******************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseIsArguments.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 200),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 214);
+	
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]';
+	
+	/**
+	 * The base implementation of `_.isArguments`.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+	 */
+	function baseIsArguments(value) {
+	  return isObjectLike(value) && baseGetTag(value) == argsTag;
+	}
+	
+	module.exports = baseIsArguments;
+
+
+/***/ },
+/* 237 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/isBuffer.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(/*! ./_root */ 202),
+	    stubFalse = __webpack_require__(/*! ./stubFalse */ 239);
+	
+	/** Detect free variable `exports`. */
+	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+	
+	/** Detect free variable `module`. */
+	var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+	
+	/** Detect the popular CommonJS extension `module.exports`. */
+	var moduleExports = freeModule && freeModule.exports === freeExports;
+	
+	/** Built-in value references. */
+	var Buffer = moduleExports ? root.Buffer : undefined;
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
+	
+	/**
+	 * Checks if `value` is a buffer.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.3.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+	 * @example
+	 *
+	 * _.isBuffer(new Buffer(2));
+	 * // => true
+	 *
+	 * _.isBuffer(new Uint8Array(2));
+	 * // => false
+	 */
+	var isBuffer = nativeIsBuffer || stubFalse;
+	
+	module.exports = isBuffer;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../webpack/buildin/module.js */ 238)(module)))
+
+/***/ },
+/* 238 */
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
+/***/ function(module, exports) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 239 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/stubFalse.js ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns `false`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.13.0
+	 * @category Util
+	 * @returns {boolean} Returns `false`.
+	 * @example
+	 *
+	 * _.times(2, _.stubFalse);
+	 * // => [false, false]
+	 */
+	function stubFalse() {
+	  return false;
+	}
+	
+	module.exports = stubFalse;
+
+
+/***/ },
+/* 240 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_isIndex.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+	
+	/** Used to detect unsigned integer values. */
+	var reIsUint = /^(?:0|[1-9]\d*)$/;
+	
+	/**
+	 * Checks if `value` is a valid array-like index.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+	 * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+	 */
+	function isIndex(value, length) {
+	  length = length == null ? MAX_SAFE_INTEGER : length;
+	  return !!length &&
+	    (typeof value == 'number' || reIsUint.test(value)) &&
+	    (value > -1 && value % 1 == 0 && value < length);
+	}
+	
+	module.exports = isIndex;
+
+
+/***/ },
+/* 241 */
+/*!**************************************************!*\
+  !*** ./~/redux-actions/~/lodash/isTypedArray.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ 242),
+	    baseUnary = __webpack_require__(/*! ./_baseUnary */ 243),
+	    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ 244);
+	
+	/* Node.js helper references. */
+	var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
+	
+	/**
+	 * Checks if `value` is classified as a typed array.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 3.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+	 * @example
+	 *
+	 * _.isTypedArray(new Uint8Array);
+	 * // => true
+	 *
+	 * _.isTypedArray([]);
+	 * // => false
+	 */
+	var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
+	
+	module.exports = isTypedArray;
+
+
+/***/ },
+/* 242 */
+/*!*******************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseIsTypedArray.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 200),
+	    isLength = __webpack_require__(/*! ./isLength */ 222),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 214);
+	
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]',
+	    arrayTag = '[object Array]',
+	    boolTag = '[object Boolean]',
+	    dateTag = '[object Date]',
+	    errorTag = '[object Error]',
+	    funcTag = '[object Function]',
+	    mapTag = '[object Map]',
+	    numberTag = '[object Number]',
+	    objectTag = '[object Object]',
+	    regexpTag = '[object RegExp]',
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    weakMapTag = '[object WeakMap]';
+	
+	var arrayBufferTag = '[object ArrayBuffer]',
+	    dataViewTag = '[object DataView]',
+	    float32Tag = '[object Float32Array]',
+	    float64Tag = '[object Float64Array]',
+	    int8Tag = '[object Int8Array]',
+	    int16Tag = '[object Int16Array]',
+	    int32Tag = '[object Int32Array]',
+	    uint8Tag = '[object Uint8Array]',
+	    uint8ClampedTag = '[object Uint8ClampedArray]',
+	    uint16Tag = '[object Uint16Array]',
+	    uint32Tag = '[object Uint32Array]';
+	
+	/** Used to identify `toStringTag` values of typed arrays. */
+	var typedArrayTags = {};
+	typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+	typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+	typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+	typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+	typedArrayTags[uint32Tag] = true;
+	typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+	typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+	typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
+	typedArrayTags[errorTag] = typedArrayTags[funcTag] =
+	typedArrayTags[mapTag] = typedArrayTags[numberTag] =
+	typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
+	typedArrayTags[setTag] = typedArrayTags[stringTag] =
+	typedArrayTags[weakMapTag] = false;
+	
+	/**
+	 * The base implementation of `_.isTypedArray` without Node.js optimizations.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+	 */
+	function baseIsTypedArray(value) {
+	  return isObjectLike(value) &&
+	    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
+	}
+	
+	module.exports = baseIsTypedArray;
+
+
+/***/ },
+/* 243 */
+/*!************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseUnary.js ***!
+  \************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.unary` without support for storing metadata.
+	 *
+	 * @private
+	 * @param {Function} func The function to cap arguments for.
+	 * @returns {Function} Returns the new capped function.
+	 */
+	function baseUnary(func) {
+	  return function(value) {
+	    return func(value);
+	  };
+	}
+	
+	module.exports = baseUnary;
+
+
+/***/ },
+/* 244 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_nodeUtil.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ 203);
+	
+	/** Detect free variable `exports`. */
+	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+	
+	/** Detect free variable `module`. */
+	var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+	
+	/** Detect the popular CommonJS extension `module.exports`. */
+	var moduleExports = freeModule && freeModule.exports === freeExports;
+	
+	/** Detect free variable `process` from Node.js. */
+	var freeProcess = moduleExports && freeGlobal.process;
+	
+	/** Used to access faster Node.js helpers. */
+	var nodeUtil = (function() {
+	  try {
+	    return freeProcess && freeProcess.binding && freeProcess.binding('util');
+	  } catch (e) {}
+	}());
+	
+	module.exports = nodeUtil;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../webpack/buildin/module.js */ 238)(module)))
+
+/***/ },
+/* 245 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseKeys.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var isPrototype = __webpack_require__(/*! ./_isPrototype */ 246),
+	    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ 247);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeys(object) {
+	  if (!isPrototype(object)) {
+	    return nativeKeys(object);
+	  }
+	  var result = [];
+	  for (var key in Object(object)) {
+	    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = baseKeys;
+
+
+/***/ },
+/* 246 */
+/*!**************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_isPrototype.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Checks if `value` is likely a prototype object.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+	 */
+	function isPrototype(value) {
+	  var Ctor = value && value.constructor,
+	      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+	
+	  return value === proto;
+	}
+	
+	module.exports = isPrototype;
+
+
+/***/ },
+/* 247 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_nativeKeys.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var overArg = __webpack_require__(/*! ./_overArg */ 213);
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeKeys = overArg(Object.keys, Object);
+	
+	module.exports = nativeKeys;
+
+
+/***/ },
+/* 248 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/lib/combineActions.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.ACTION_TYPE_DELIMITER = undefined;
+	exports.default = combineActions;
+	
+	var _isString = __webpack_require__(/*! lodash/isString */ 223);
+	
+	var _isString2 = _interopRequireDefault(_isString);
+	
+	var _isFunction = __webpack_require__(/*! lodash/isFunction */ 199);
+	
+	var _isFunction2 = _interopRequireDefault(_isFunction);
+	
+	var _isEmpty = __webpack_require__(/*! lodash/isEmpty */ 249);
+	
+	var _isEmpty2 = _interopRequireDefault(_isEmpty);
+	
+	var _toString = __webpack_require__(/*! lodash/toString */ 262);
+	
+	var _toString2 = _interopRequireDefault(_toString);
+	
+	var _isSymbol = __webpack_require__(/*! lodash/isSymbol */ 228);
+	
+	var _isSymbol2 = _interopRequireDefault(_isSymbol);
+	
+	var _invariant = __webpack_require__(/*! invariant */ 209);
+	
+	var _invariant2 = _interopRequireDefault(_invariant);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ACTION_TYPE_DELIMITER = exports.ACTION_TYPE_DELIMITER = '||';
+	
+	function isValidActionType(type) {
+	  return (0, _isString2.default)(type) || (0, _isFunction2.default)(type) || (0, _isSymbol2.default)(type);
+	}
+	
+	function isValidActionTypes(types) {
+	  if ((0, _isEmpty2.default)(types)) {
+	    return false;
+	  }
+	  return types.every(isValidActionType);
+	}
+	
+	function combineActions() {
+	  for (var _len = arguments.length, actionsTypes = Array(_len), _key = 0; _key < _len; _key++) {
+	    actionsTypes[_key] = arguments[_key];
+	  }
+	
+	  (0, _invariant2.default)(isValidActionTypes(actionsTypes), 'Expected action types to be strings, symbols, or action creators');
+	  var combinedActionType = actionsTypes.map(_toString2.default).join(ACTION_TYPE_DELIMITER);
+	  return { toString: function toString() {
+	      return combinedActionType;
+	    } };
+	}
+
+/***/ },
+/* 249 */
+/*!*********************************************!*\
+  !*** ./~/redux-actions/~/lodash/isEmpty.js ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseKeys = __webpack_require__(/*! ./_baseKeys */ 245),
+	    getTag = __webpack_require__(/*! ./_getTag */ 250),
+	    isArguments = __webpack_require__(/*! ./isArguments */ 235),
+	    isArray = __webpack_require__(/*! ./isArray */ 224),
+	    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 221),
+	    isBuffer = __webpack_require__(/*! ./isBuffer */ 237),
+	    isPrototype = __webpack_require__(/*! ./_isPrototype */ 246),
+	    isTypedArray = __webpack_require__(/*! ./isTypedArray */ 241);
+	
+	/** `Object#toString` result references. */
+	var mapTag = '[object Map]',
+	    setTag = '[object Set]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Checks if `value` is an empty object, collection, map, or set.
+	 *
+	 * Objects are considered empty if they have no own enumerable string keyed
+	 * properties.
+	 *
+	 * Array-like values such as `arguments` objects, arrays, buffers, strings, or
+	 * jQuery-like collections are considered empty if they have a `length` of `0`.
+	 * Similarly, maps and sets are considered empty if they have a `size` of `0`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is empty, else `false`.
+	 * @example
+	 *
+	 * _.isEmpty(null);
+	 * // => true
+	 *
+	 * _.isEmpty(true);
+	 * // => true
+	 *
+	 * _.isEmpty(1);
+	 * // => true
+	 *
+	 * _.isEmpty([1, 2, 3]);
+	 * // => false
+	 *
+	 * _.isEmpty({ 'a': 1 });
+	 * // => false
+	 */
+	function isEmpty(value) {
+	  if (value == null) {
+	    return true;
+	  }
+	  if (isArrayLike(value) &&
+	      (isArray(value) || typeof value == 'string' || typeof value.splice == 'function' ||
+	        isBuffer(value) || isTypedArray(value) || isArguments(value))) {
+	    return !value.length;
+	  }
+	  var tag = getTag(value);
+	  if (tag == mapTag || tag == setTag) {
+	    return !value.size;
+	  }
+	  if (isPrototype(value)) {
+	    return !baseKeys(value).length;
+	  }
+	  for (var key in value) {
+	    if (hasOwnProperty.call(value, key)) {
+	      return false;
+	    }
+	  }
+	  return true;
+	}
+	
+	module.exports = isEmpty;
+
+
+/***/ },
+/* 250 */
+/*!*********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_getTag.js ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var DataView = __webpack_require__(/*! ./_DataView */ 251),
+	    Map = __webpack_require__(/*! ./_Map */ 258),
+	    Promise = __webpack_require__(/*! ./_Promise */ 259),
+	    Set = __webpack_require__(/*! ./_Set */ 260),
+	    WeakMap = __webpack_require__(/*! ./_WeakMap */ 261),
+	    baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 200),
+	    toSource = __webpack_require__(/*! ./_toSource */ 256);
+	
+	/** `Object#toString` result references. */
+	var mapTag = '[object Map]',
+	    objectTag = '[object Object]',
+	    promiseTag = '[object Promise]',
+	    setTag = '[object Set]',
+	    weakMapTag = '[object WeakMap]';
+	
+	var dataViewTag = '[object DataView]';
+	
+	/** Used to detect maps, sets, and weakmaps. */
+	var dataViewCtorString = toSource(DataView),
+	    mapCtorString = toSource(Map),
+	    promiseCtorString = toSource(Promise),
+	    setCtorString = toSource(Set),
+	    weakMapCtorString = toSource(WeakMap);
+	
+	/**
+	 * Gets the `toStringTag` of `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the `toStringTag`.
+	 */
+	var getTag = baseGetTag;
+	
+	// Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
+	if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+	    (Map && getTag(new Map) != mapTag) ||
+	    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+	    (Set && getTag(new Set) != setTag) ||
+	    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+	  getTag = function(value) {
+	    var result = baseGetTag(value),
+	        Ctor = result == objectTag ? value.constructor : undefined,
+	        ctorString = Ctor ? toSource(Ctor) : '';
+	
+	    if (ctorString) {
+	      switch (ctorString) {
+	        case dataViewCtorString: return dataViewTag;
+	        case mapCtorString: return mapTag;
+	        case promiseCtorString: return promiseTag;
+	        case setCtorString: return setTag;
+	        case weakMapCtorString: return weakMapTag;
+	      }
+	    }
+	    return result;
+	  };
+	}
+	
+	module.exports = getTag;
+
+
+/***/ },
+/* 251 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_DataView.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(/*! ./_getNative */ 252),
+	    root = __webpack_require__(/*! ./_root */ 202);
+	
+	/* Built-in method references that are verified to be native. */
+	var DataView = getNative(root, 'DataView');
+	
+	module.exports = DataView;
+
+
+/***/ },
+/* 252 */
+/*!************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_getNative.js ***!
+  \************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ 253),
+	    getValue = __webpack_require__(/*! ./_getValue */ 257);
+	
+	/**
+	 * Gets the native function at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {string} key The key of the method to get.
+	 * @returns {*} Returns the function if it's native, else `undefined`.
+	 */
+	function getNative(object, key) {
+	  var value = getValue(object, key);
+	  return baseIsNative(value) ? value : undefined;
+	}
+	
+	module.exports = getNative;
+
+
+/***/ },
+/* 253 */
+/*!***************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseIsNative.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var isFunction = __webpack_require__(/*! ./isFunction */ 199),
+	    isMasked = __webpack_require__(/*! ./_isMasked */ 254),
+	    isObject = __webpack_require__(/*! ./isObject */ 206),
+	    toSource = __webpack_require__(/*! ./_toSource */ 256);
+	
+	/**
+	 * Used to match `RegExp`
+	 * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+	 */
+	var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+	
+	/** Used to detect host constructors (Safari). */
+	var reIsHostCtor = /^\[object .+?Constructor\]$/;
+	
+	/** Used for built-in method references. */
+	var funcProto = Function.prototype,
+	    objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Used to detect if a method is native. */
+	var reIsNative = RegExp('^' +
+	  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+	);
+	
+	/**
+	 * The base implementation of `_.isNative` without bad shim checks.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a native function,
+	 *  else `false`.
+	 */
+	function baseIsNative(value) {
+	  if (!isObject(value) || isMasked(value)) {
+	    return false;
+	  }
+	  var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
+	  return pattern.test(toSource(value));
+	}
+	
+	module.exports = baseIsNative;
+
+
+/***/ },
+/* 254 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_isMasked.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var coreJsData = __webpack_require__(/*! ./_coreJsData */ 255);
+	
+	/** Used to detect methods masquerading as native. */
+	var maskSrcKey = (function() {
+	  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+	  return uid ? ('Symbol(src)_1.' + uid) : '';
+	}());
+	
+	/**
+	 * Checks if `func` has its source masked.
+	 *
+	 * @private
+	 * @param {Function} func The function to check.
+	 * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+	 */
+	function isMasked(func) {
+	  return !!maskSrcKey && (maskSrcKey in func);
+	}
+	
+	module.exports = isMasked;
+
+
+/***/ },
+/* 255 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_coreJsData.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(/*! ./_root */ 202);
+	
+	/** Used to detect overreaching core-js shims. */
+	var coreJsData = root['__core-js_shared__'];
+	
+	module.exports = coreJsData;
+
+
+/***/ },
+/* 256 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_toSource.js ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var funcProto = Function.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+	
+	/**
+	 * Converts `func` to its source code.
+	 *
+	 * @private
+	 * @param {Function} func The function to convert.
+	 * @returns {string} Returns the source code.
+	 */
+	function toSource(func) {
+	  if (func != null) {
+	    try {
+	      return funcToString.call(func);
+	    } catch (e) {}
+	    try {
+	      return (func + '');
+	    } catch (e) {}
+	  }
+	  return '';
+	}
+	
+	module.exports = toSource;
+
+
+/***/ },
+/* 257 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_getValue.js ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Gets the value at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} [object] The object to query.
+	 * @param {string} key The key of the property to get.
+	 * @returns {*} Returns the property value.
+	 */
+	function getValue(object, key) {
+	  return object == null ? undefined : object[key];
+	}
+	
+	module.exports = getValue;
+
+
+/***/ },
+/* 258 */
+/*!******************************************!*\
+  !*** ./~/redux-actions/~/lodash/_Map.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(/*! ./_getNative */ 252),
+	    root = __webpack_require__(/*! ./_root */ 202);
+	
+	/* Built-in method references that are verified to be native. */
+	var Map = getNative(root, 'Map');
+	
+	module.exports = Map;
+
+
+/***/ },
+/* 259 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_Promise.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(/*! ./_getNative */ 252),
+	    root = __webpack_require__(/*! ./_root */ 202);
+	
+	/* Built-in method references that are verified to be native. */
+	var Promise = getNative(root, 'Promise');
+	
+	module.exports = Promise;
+
+
+/***/ },
+/* 260 */
+/*!******************************************!*\
+  !*** ./~/redux-actions/~/lodash/_Set.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(/*! ./_getNative */ 252),
+	    root = __webpack_require__(/*! ./_root */ 202);
+	
+	/* Built-in method references that are verified to be native. */
+	var Set = getNative(root, 'Set');
+	
+	module.exports = Set;
+
+
+/***/ },
+/* 261 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_WeakMap.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(/*! ./_getNative */ 252),
+	    root = __webpack_require__(/*! ./_root */ 202);
+	
+	/* Built-in method references that are verified to be native. */
+	var WeakMap = getNative(root, 'WeakMap');
+	
+	module.exports = WeakMap;
+
+
+/***/ },
+/* 262 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/toString.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseToString = __webpack_require__(/*! ./_baseToString */ 263);
+	
+	/**
+	 * Converts `value` to a string. An empty string is returned for `null`
+	 * and `undefined` values. The sign of `-0` is preserved.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to convert.
+	 * @returns {string} Returns the converted string.
+	 * @example
+	 *
+	 * _.toString(null);
+	 * // => ''
+	 *
+	 * _.toString(-0);
+	 * // => '-0'
+	 *
+	 * _.toString([1, 2, 3]);
+	 * // => '1,2,3'
+	 */
+	function toString(value) {
+	  return value == null ? '' : baseToString(value);
+	}
+	
+	module.exports = toString;
+
+
+/***/ },
+/* 263 */
+/*!***************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseToString.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(/*! ./_Symbol */ 201),
+	    arrayMap = __webpack_require__(/*! ./_arrayMap */ 231),
+	    isArray = __webpack_require__(/*! ./isArray */ 224),
+	    isSymbol = __webpack_require__(/*! ./isSymbol */ 228);
+	
+	/** Used as references for various `Number` constants. */
+	var INFINITY = 1 / 0;
+	
+	/** Used to convert symbols to primitives and strings. */
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
+	    symbolToString = symbolProto ? symbolProto.toString : undefined;
+	
+	/**
+	 * The base implementation of `_.toString` which doesn't convert nullish
+	 * values to empty strings.
+	 *
+	 * @private
+	 * @param {*} value The value to process.
+	 * @returns {string} Returns the string.
+	 */
+	function baseToString(value) {
+	  // Exit early for strings to avoid a performance hit in some environments.
+	  if (typeof value == 'string') {
+	    return value;
+	  }
+	  if (isArray(value)) {
+	    // Recursively convert values (susceptible to call stack limits).
+	    return arrayMap(value, baseToString) + '';
+	  }
+	  if (isSymbol(value)) {
+	    return symbolToString ? symbolToString.call(value) : '';
+	  }
+	  var result = (value + '');
+	  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+	}
+	
+	module.exports = baseToString;
+
+
+/***/ },
+/* 264 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/lib/handleActions.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = handleActions;
+	
+	var _handleAction = __webpack_require__(/*! ./handleAction */ 210);
+	
+	var _handleAction2 = _interopRequireDefault(_handleAction);
+	
+	var _ownKeys = __webpack_require__(/*! ./ownKeys */ 265);
+	
+	var _ownKeys2 = _interopRequireDefault(_ownKeys);
+	
+	var _reduceReducers = __webpack_require__(/*! reduce-reducers */ 266);
+	
+	var _reduceReducers2 = _interopRequireDefault(_reduceReducers);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function handleActions(handlers, defaultState) {
+	  var reducers = (0, _ownKeys2.default)(handlers).map(function (type) {
+	    return (0, _handleAction2.default)(type, handlers[type], defaultState);
+	  });
+	  var reducer = _reduceReducers2.default.apply(undefined, _toConsumableArray(reducers));
+	  return function (state, action) {
+	    return reducer(state, action);
+	  };
+	}
+
+/***/ },
+/* 265 */
+/*!****************************************!*\
+  !*** ./~/redux-actions/lib/ownKeys.js ***!
+  \****************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = ownKeys;
+	function ownKeys(object) {
+	  if (typeof Reflect !== 'undefined' && typeof Reflect.ownKeys === 'function') {
+	    return Reflect.ownKeys(object);
+	  }
+	
+	  var keys = Object.getOwnPropertyNames(object);
+	
+	  if (typeof Object.getOwnPropertySymbols === 'function') {
+	    keys = keys.concat(Object.getOwnPropertySymbols(object));
+	  }
+	
+	  return keys;
+	}
+
+/***/ },
+/* 266 */
+/*!********************************************************!*\
+  !*** ./~/redux-actions/~/reduce-reducers/lib/index.js ***!
+  \********************************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	exports["default"] = reduceReducers;
+	
+	function reduceReducers() {
+	  for (var _len = arguments.length, reducers = Array(_len), _key = 0; _key < _len; _key++) {
+	    reducers[_key] = arguments[_key];
+	  }
+	
+	  return function (previous, current) {
+	    return reducers.reduce(function (p, r) {
+	      return r(p, current);
+	    }, previous);
+	  };
+	}
+	
+	module.exports = exports["default"];
+
+/***/ },
+/* 267 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/lib/createActions.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports.default = createActions;
+	
+	var _camelCase = __webpack_require__(/*! ./camelCase */ 268);
+	
+	var _camelCase2 = _interopRequireDefault(_camelCase);
+	
+	var _identity = __webpack_require__(/*! lodash/identity */ 198);
+	
+	var _identity2 = _interopRequireDefault(_identity);
+	
+	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 211);
+	
+	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+	
+	var _isArray = __webpack_require__(/*! lodash/isArray */ 224);
+	
+	var _isArray2 = _interopRequireDefault(_isArray);
+	
+	var _last = __webpack_require__(/*! lodash/last */ 269);
+	
+	var _last2 = _interopRequireDefault(_last);
+	
+	var _isString = __webpack_require__(/*! lodash/isString */ 223);
+	
+	var _isString2 = _interopRequireDefault(_isString);
+	
+	var _defaults = __webpack_require__(/*! lodash/defaults */ 270);
+	
+	var _defaults2 = _interopRequireDefault(_defaults);
+	
+	var _isFunction = __webpack_require__(/*! lodash/isFunction */ 199);
+	
+	var _isFunction2 = _interopRequireDefault(_isFunction);
+	
+	var _createAction = __webpack_require__(/*! ./createAction */ 197);
+	
+	var _createAction2 = _interopRequireDefault(_createAction);
+	
+	var _invariant = __webpack_require__(/*! invariant */ 209);
+	
+	var _invariant2 = _interopRequireDefault(_invariant);
+	
+	var _arrayToObject = __webpack_require__(/*! ./arrayToObject */ 290);
+	
+	var _arrayToObject2 = _interopRequireDefault(_arrayToObject);
+	
+	var _namespaceActions = __webpack_require__(/*! ./namespaceActions */ 291);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function createActions(actionMap) {
+	  for (var _len = arguments.length, identityActions = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	    identityActions[_key - 1] = arguments[_key];
+	  }
+	
+	  function getFullOptions() {
+	    var partialOptions = (0, _isPlainObject2.default)((0, _last2.default)(identityActions)) ? identityActions.pop() : {};
+	    return (0, _defaults2.default)(partialOptions, { namespace: _namespaceActions.defaultNamespace });
+	  }
+	
+	  var _getFullOptions = getFullOptions();
+	
+	  var namespace = _getFullOptions.namespace;
+	
+	  (0, _invariant2.default)(identityActions.every(_isString2.default) && ((0, _isString2.default)(actionMap) || (0, _isPlainObject2.default)(actionMap)), 'Expected optional object followed by string action types');
+	  if ((0, _isString2.default)(actionMap)) {
+	    return actionCreatorsFromIdentityActions([actionMap].concat(identityActions));
+	  }
+	  return _extends({}, actionCreatorsFromActionMap(actionMap, namespace), actionCreatorsFromIdentityActions(identityActions));
+	}
+	
+	function actionCreatorsFromActionMap(actionMap, namespace) {
+	  var flatActionMap = (0, _namespaceActions.flattenActionMap)(actionMap, namespace);
+	  var flatActionCreators = actionMapToActionCreators(flatActionMap);
+	  return (0, _namespaceActions.unflattenActionCreators)(flatActionCreators, namespace);
+	}
+	
+	function actionMapToActionCreators(actionMap) {
+	  function isValidActionMapValue(actionMapValue) {
+	    if ((0, _isFunction2.default)(actionMapValue)) {
+	      return true;
+	    } else if ((0, _isArray2.default)(actionMapValue)) {
+	      var _actionMapValue = _slicedToArray(actionMapValue, 2);
+	
+	      var _actionMapValue$ = _actionMapValue[0];
+	      var payload = _actionMapValue$ === undefined ? _identity2.default : _actionMapValue$;
+	      var meta = _actionMapValue[1];
+	
+	      return (0, _isFunction2.default)(payload) && (0, _isFunction2.default)(meta);
+	    }
+	    return false;
+	  }
+	
+	  return (0, _arrayToObject2.default)(Object.keys(actionMap), function (partialActionCreators, type) {
+	    var actionMapValue = actionMap[type];
+	    (0, _invariant2.default)(isValidActionMapValue(actionMapValue), 'Expected function, undefined, or array with payload and meta ' + ('functions for ' + type));
+	    var actionCreator = (0, _isArray2.default)(actionMapValue) ? _createAction2.default.apply(undefined, [type].concat(_toConsumableArray(actionMapValue))) : (0, _createAction2.default)(type, actionMapValue);
+	    return _extends({}, partialActionCreators, _defineProperty({}, type, actionCreator));
+	  });
+	}
+	
+	function actionCreatorsFromIdentityActions(identityActions) {
+	  var actionMap = (0, _arrayToObject2.default)(identityActions, function (partialActionMap, type) {
+	    return _extends({}, partialActionMap, _defineProperty({}, type, _identity2.default));
+	  });
+	  var actionCreators = actionMapToActionCreators(actionMap);
+	  return (0, _arrayToObject2.default)(Object.keys(actionCreators), function (partialActionCreators, type) {
+	    return _extends({}, partialActionCreators, _defineProperty({}, (0, _camelCase2.default)(type), actionCreators[type]));
+	  });
+	}
+
+/***/ },
+/* 268 */
+/*!******************************************!*\
+  !*** ./~/redux-actions/lib/camelCase.js ***!
+  \******************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	// based on https://github.com/lodash/lodash/blob/4.17.2/lodash.js#L14100
+	// eslint-disable-next-line max-len
+	var wordPattern = /[A-Z\xc0-\xd6\xd8-\xde]?[a-z\xdf-\xf6\xf8-\xff]+(?:['’](?:d|ll|m|re|s|t|ve))?(?=[\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000]|[A-Z\xc0-\xd6\xd8-\xde]|$)|(?:[A-Z\xc0-\xd6\xd8-\xde]|[^\ud800-\udfff\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\d+\u2700-\u27bfa-z\xdf-\xf6\xf8-\xffA-Z\xc0-\xd6\xd8-\xde])+(?:['’](?:D|LL|M|RE|S|T|VE))?(?=[\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000]|[A-Z\xc0-\xd6\xd8-\xde](?:[a-z\xdf-\xf6\xf8-\xff]|[^\ud800-\udfff\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\d+\u2700-\u27bfa-z\xdf-\xf6\xf8-\xffA-Z\xc0-\xd6\xd8-\xde])|$)|[A-Z\xc0-\xd6\xd8-\xde]?(?:[a-z\xdf-\xf6\xf8-\xff]|[^\ud800-\udfff\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\d+\u2700-\u27bfa-z\xdf-\xf6\xf8-\xffA-Z\xc0-\xd6\xd8-\xde])+(?:['’](?:d|ll|m|re|s|t|ve))?|[A-Z\xc0-\xd6\xd8-\xde]+(?:['’](?:D|LL|M|RE|S|T|VE))?|\d*(?:(?:1ST|2ND|3RD|(?![123])\dTH)\b)|\d*(?:(?:1st|2nd|3rd|(?![123])\dth)\b)|\d+|(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe2f\u20d0-\u20ff]|\ud83c[\udffb-\udfff])?(?:\u200d(?:[^\ud800-\udfff]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe2f\u20d0-\u20ff]|\ud83c[\udffb-\udfff])?)*/g;
+	var namespacer = '/';
+	
+	function camelCase(string) {
+	  return string.match(wordPattern).reduce(function (camelCased, word, index) {
+	    return camelCased + (index === 0 ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.substring(1).toLowerCase());
+	  }, '');
+	}
+	
+	exports.default = function (type) {
+	  return type.split(namespacer).map(camelCase).join(namespacer);
+	};
+
+/***/ },
+/* 269 */
+/*!******************************************!*\
+  !*** ./~/redux-actions/~/lodash/last.js ***!
+  \******************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Gets the last element of `array`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Array
+	 * @param {Array} array The array to query.
+	 * @returns {*} Returns the last element of `array`.
+	 * @example
+	 *
+	 * _.last([1, 2, 3]);
+	 * // => 3
+	 */
+	function last(array) {
+	  var length = array == null ? 0 : array.length;
+	  return length ? array[length - 1] : undefined;
+	}
+	
+	module.exports = last;
+
+
+/***/ },
+/* 270 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/defaults.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var apply = __webpack_require__(/*! ./_apply */ 271),
+	    assignInWith = __webpack_require__(/*! ./assignInWith */ 272),
+	    baseRest = __webpack_require__(/*! ./_baseRest */ 279),
+	    customDefaultsAssignIn = __webpack_require__(/*! ./_customDefaultsAssignIn */ 289);
+	
+	/**
+	 * Assigns own and inherited enumerable string keyed properties of source
+	 * objects to the destination object for all destination properties that
+	 * resolve to `undefined`. Source objects are applied from left to right.
+	 * Once a property is set, additional values of the same property are ignored.
+	 *
+	 * **Note:** This method mutates `object`.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The destination object.
+	 * @param {...Object} [sources] The source objects.
+	 * @returns {Object} Returns `object`.
+	 * @see _.defaultsDeep
+	 * @example
+	 *
+	 * _.defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+	 * // => { 'a': 1, 'b': 2 }
+	 */
+	var defaults = baseRest(function(args) {
+	  args.push(undefined, customDefaultsAssignIn);
+	  return apply(assignInWith, undefined, args);
+	});
+	
+	module.exports = defaults;
+
+
+/***/ },
+/* 271 */
+/*!********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_apply.js ***!
+  \********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * A faster alternative to `Function#apply`, this function invokes `func`
+	 * with the `this` binding of `thisArg` and the arguments of `args`.
+	 *
+	 * @private
+	 * @param {Function} func The function to invoke.
+	 * @param {*} thisArg The `this` binding of `func`.
+	 * @param {Array} args The arguments to invoke `func` with.
+	 * @returns {*} Returns the result of `func`.
+	 */
+	function apply(func, thisArg, args) {
+	  switch (args.length) {
+	    case 0: return func.call(thisArg);
+	    case 1: return func.call(thisArg, args[0]);
+	    case 2: return func.call(thisArg, args[0], args[1]);
+	    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+	  }
+	  return func.apply(thisArg, args);
+	}
+	
+	module.exports = apply;
+
+
+/***/ },
+/* 272 */
+/*!**************************************************!*\
+  !*** ./~/redux-actions/~/lodash/assignInWith.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObject = __webpack_require__(/*! ./_copyObject */ 273),
+	    createAssigner = __webpack_require__(/*! ./_createAssigner */ 278),
+	    keysIn = __webpack_require__(/*! ./keysIn */ 286);
+	
+	/**
+	 * This method is like `_.assignIn` except that it accepts `customizer`
+	 * which is invoked to produce the assigned values. If `customizer` returns
+	 * `undefined`, assignment is handled by the method instead. The `customizer`
+	 * is invoked with five arguments: (objValue, srcValue, key, object, source).
+	 *
+	 * **Note:** This method mutates `object`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @alias extendWith
+	 * @category Object
+	 * @param {Object} object The destination object.
+	 * @param {...Object} sources The source objects.
+	 * @param {Function} [customizer] The function to customize assigned values.
+	 * @returns {Object} Returns `object`.
+	 * @see _.assignWith
+	 * @example
+	 *
+	 * function customizer(objValue, srcValue) {
+	 *   return _.isUndefined(objValue) ? srcValue : objValue;
+	 * }
+	 *
+	 * var defaults = _.partialRight(_.assignInWith, customizer);
+	 *
+	 * defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+	 * // => { 'a': 1, 'b': 2 }
+	 */
+	var assignInWith = createAssigner(function(object, source, srcIndex, customizer) {
+	  copyObject(source, keysIn(source), object, customizer);
+	});
+	
+	module.exports = assignInWith;
+
+
+/***/ },
+/* 273 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_copyObject.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var assignValue = __webpack_require__(/*! ./_assignValue */ 274),
+	    baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ 275);
+	
+	/**
+	 * Copies properties of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy properties from.
+	 * @param {Array} props The property identifiers to copy.
+	 * @param {Object} [object={}] The object to copy properties to.
+	 * @param {Function} [customizer] The function to customize copied values.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copyObject(source, props, object, customizer) {
+	  var isNew = !object;
+	  object || (object = {});
+	
+	  var index = -1,
+	      length = props.length;
+	
+	  while (++index < length) {
+	    var key = props[index];
+	
+	    var newValue = customizer
+	      ? customizer(object[key], source[key], key, object, source)
+	      : undefined;
+	
+	    if (newValue === undefined) {
+	      newValue = source[key];
+	    }
+	    if (isNew) {
+	      baseAssignValue(object, key, newValue);
+	    } else {
+	      assignValue(object, key, newValue);
+	    }
+	  }
+	  return object;
+	}
+	
+	module.exports = copyObject;
+
+
+/***/ },
+/* 274 */
+/*!**************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_assignValue.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ 275),
+	    eq = __webpack_require__(/*! ./eq */ 277);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Assigns `value` to `key` of `object` if the existing value is not equivalent
+	 * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * for equality comparisons.
+	 *
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {string} key The key of the property to assign.
+	 * @param {*} value The value to assign.
+	 */
+	function assignValue(object, key, value) {
+	  var objValue = object[key];
+	  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+	      (value === undefined && !(key in object))) {
+	    baseAssignValue(object, key, value);
+	  }
+	}
+	
+	module.exports = assignValue;
+
+
+/***/ },
+/* 275 */
+/*!******************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseAssignValue.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var defineProperty = __webpack_require__(/*! ./_defineProperty */ 276);
+	
+	/**
+	 * The base implementation of `assignValue` and `assignMergeValue` without
+	 * value checks.
+	 *
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {string} key The key of the property to assign.
+	 * @param {*} value The value to assign.
+	 */
+	function baseAssignValue(object, key, value) {
+	  if (key == '__proto__' && defineProperty) {
+	    defineProperty(object, key, {
+	      'configurable': true,
+	      'enumerable': true,
+	      'value': value,
+	      'writable': true
+	    });
+	  } else {
+	    object[key] = value;
+	  }
+	}
+	
+	module.exports = baseAssignValue;
+
+
+/***/ },
+/* 276 */
+/*!*****************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_defineProperty.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(/*! ./_getNative */ 252);
+	
+	var defineProperty = (function() {
+	  try {
+	    var func = getNative(Object, 'defineProperty');
+	    func({}, '', {});
+	    return func;
+	  } catch (e) {}
+	}());
+	
+	module.exports = defineProperty;
+
+
+/***/ },
+/* 277 */
+/*!****************************************!*\
+  !*** ./~/redux-actions/~/lodash/eq.js ***!
+  \****************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Performs a
+	 * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * comparison between two values to determine if they are equivalent.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to compare.
+	 * @param {*} other The other value to compare.
+	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+	 * @example
+	 *
+	 * var object = { 'a': 1 };
+	 * var other = { 'a': 1 };
+	 *
+	 * _.eq(object, object);
+	 * // => true
+	 *
+	 * _.eq(object, other);
+	 * // => false
+	 *
+	 * _.eq('a', 'a');
+	 * // => true
+	 *
+	 * _.eq('a', Object('a'));
+	 * // => false
+	 *
+	 * _.eq(NaN, NaN);
+	 * // => true
+	 */
+	function eq(value, other) {
+	  return value === other || (value !== value && other !== other);
+	}
+	
+	module.exports = eq;
+
+
+/***/ },
+/* 278 */
+/*!*****************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_createAssigner.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseRest = __webpack_require__(/*! ./_baseRest */ 279),
+	    isIterateeCall = __webpack_require__(/*! ./_isIterateeCall */ 285);
+	
+	/**
+	 * Creates a function like `_.assign`.
+	 *
+	 * @private
+	 * @param {Function} assigner The function to assign values.
+	 * @returns {Function} Returns the new assigner function.
+	 */
+	function createAssigner(assigner) {
+	  return baseRest(function(object, sources) {
+	    var index = -1,
+	        length = sources.length,
+	        customizer = length > 1 ? sources[length - 1] : undefined,
+	        guard = length > 2 ? sources[2] : undefined;
+	
+	    customizer = (assigner.length > 3 && typeof customizer == 'function')
+	      ? (length--, customizer)
+	      : undefined;
+	
+	    if (guard && isIterateeCall(sources[0], sources[1], guard)) {
+	      customizer = length < 3 ? undefined : customizer;
+	      length = 1;
+	    }
+	    object = Object(object);
+	    while (++index < length) {
+	      var source = sources[index];
+	      if (source) {
+	        assigner(object, source, index, customizer);
+	      }
+	    }
+	    return object;
+	  });
+	}
+	
+	module.exports = createAssigner;
+
+
+/***/ },
+/* 279 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseRest.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var identity = __webpack_require__(/*! ./identity */ 198),
+	    overRest = __webpack_require__(/*! ./_overRest */ 280),
+	    setToString = __webpack_require__(/*! ./_setToString */ 281);
+	
+	/**
+	 * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+	 *
+	 * @private
+	 * @param {Function} func The function to apply a rest parameter to.
+	 * @param {number} [start=func.length-1] The start position of the rest parameter.
+	 * @returns {Function} Returns the new function.
+	 */
+	function baseRest(func, start) {
+	  return setToString(overRest(func, start, identity), func + '');
+	}
+	
+	module.exports = baseRest;
+
+
+/***/ },
+/* 280 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_overRest.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var apply = __webpack_require__(/*! ./_apply */ 271);
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max;
+	
+	/**
+	 * A specialized version of `baseRest` which transforms the rest array.
+	 *
+	 * @private
+	 * @param {Function} func The function to apply a rest parameter to.
+	 * @param {number} [start=func.length-1] The start position of the rest parameter.
+	 * @param {Function} transform The rest array transform.
+	 * @returns {Function} Returns the new function.
+	 */
+	function overRest(func, start, transform) {
+	  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+	  return function() {
+	    var args = arguments,
+	        index = -1,
+	        length = nativeMax(args.length - start, 0),
+	        array = Array(length);
+	
+	    while (++index < length) {
+	      array[index] = args[start + index];
+	    }
+	    index = -1;
+	    var otherArgs = Array(start + 1);
+	    while (++index < start) {
+	      otherArgs[index] = args[index];
+	    }
+	    otherArgs[start] = transform(array);
+	    return apply(func, this, otherArgs);
+	  };
+	}
+	
+	module.exports = overRest;
+
+
+/***/ },
+/* 281 */
+/*!**************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_setToString.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseSetToString = __webpack_require__(/*! ./_baseSetToString */ 282),
+	    shortOut = __webpack_require__(/*! ./_shortOut */ 284);
+	
+	/**
+	 * Sets the `toString` method of `func` to return `string`.
+	 *
+	 * @private
+	 * @param {Function} func The function to modify.
+	 * @param {Function} string The `toString` result.
+	 * @returns {Function} Returns `func`.
+	 */
+	var setToString = shortOut(baseSetToString);
+	
+	module.exports = setToString;
+
+
+/***/ },
+/* 282 */
+/*!******************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseSetToString.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var constant = __webpack_require__(/*! ./constant */ 283),
+	    defineProperty = __webpack_require__(/*! ./_defineProperty */ 276),
+	    identity = __webpack_require__(/*! ./identity */ 198);
+	
+	/**
+	 * The base implementation of `setToString` without support for hot loop shorting.
+	 *
+	 * @private
+	 * @param {Function} func The function to modify.
+	 * @param {Function} string The `toString` result.
+	 * @returns {Function} Returns `func`.
+	 */
+	var baseSetToString = !defineProperty ? identity : function(func, string) {
+	  return defineProperty(func, 'toString', {
+	    'configurable': true,
+	    'enumerable': false,
+	    'value': constant(string),
+	    'writable': true
+	  });
+	};
+	
+	module.exports = baseSetToString;
+
+
+/***/ },
+/* 283 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/~/lodash/constant.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a function that returns `value`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 2.4.0
+	 * @category Util
+	 * @param {*} value The value to return from the new function.
+	 * @returns {Function} Returns the new constant function.
+	 * @example
+	 *
+	 * var objects = _.times(2, _.constant({ 'a': 1 }));
+	 *
+	 * console.log(objects);
+	 * // => [{ 'a': 1 }, { 'a': 1 }]
+	 *
+	 * console.log(objects[0] === objects[1]);
+	 * // => true
+	 */
+	function constant(value) {
+	  return function() {
+	    return value;
+	  };
+	}
+	
+	module.exports = constant;
+
+
+/***/ },
+/* 284 */
+/*!***********************************************!*\
+  !*** ./~/redux-actions/~/lodash/_shortOut.js ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	/** Used to detect hot functions by number of calls within a span of milliseconds. */
+	var HOT_COUNT = 800,
+	    HOT_SPAN = 16;
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeNow = Date.now;
+	
+	/**
+	 * Creates a function that'll short out and invoke `identity` instead
+	 * of `func` when it's called `HOT_COUNT` or more times in `HOT_SPAN`
+	 * milliseconds.
+	 *
+	 * @private
+	 * @param {Function} func The function to restrict.
+	 * @returns {Function} Returns the new shortable function.
+	 */
+	function shortOut(func) {
+	  var count = 0,
+	      lastCalled = 0;
+	
+	  return function() {
+	    var stamp = nativeNow(),
+	        remaining = HOT_SPAN - (stamp - lastCalled);
+	
+	    lastCalled = stamp;
+	    if (remaining > 0) {
+	      if (++count >= HOT_COUNT) {
+	        return arguments[0];
+	      }
+	    } else {
+	      count = 0;
+	    }
+	    return func.apply(undefined, arguments);
+	  };
+	}
+	
+	module.exports = shortOut;
+
+
+/***/ },
+/* 285 */
+/*!*****************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_isIterateeCall.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var eq = __webpack_require__(/*! ./eq */ 277),
+	    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 221),
+	    isIndex = __webpack_require__(/*! ./_isIndex */ 240),
+	    isObject = __webpack_require__(/*! ./isObject */ 206);
+	
+	/**
+	 * Checks if the given arguments are from an iteratee call.
+	 *
+	 * @private
+	 * @param {*} value The potential iteratee value argument.
+	 * @param {*} index The potential iteratee index or key argument.
+	 * @param {*} object The potential iteratee object argument.
+	 * @returns {boolean} Returns `true` if the arguments are from an iteratee call,
+	 *  else `false`.
+	 */
+	function isIterateeCall(value, index, object) {
+	  if (!isObject(object)) {
+	    return false;
+	  }
+	  var type = typeof index;
+	  if (type == 'number'
+	        ? (isArrayLike(object) && isIndex(index, object.length))
+	        : (type == 'string' && index in object)
+	      ) {
+	    return eq(object[index], value);
+	  }
+	  return false;
+	}
+	
+	module.exports = isIterateeCall;
+
+
+/***/ },
+/* 286 */
+/*!********************************************!*\
+  !*** ./~/redux-actions/~/lodash/keysIn.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ 233),
+	    baseKeysIn = __webpack_require__(/*! ./_baseKeysIn */ 287),
+	    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 221);
+	
+	/**
+	 * Creates an array of the own and inherited enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 3.0.0
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keysIn(new Foo);
+	 * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
+	 */
+	function keysIn(object) {
+	  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
+	}
+	
+	module.exports = keysIn;
+
+
+/***/ },
+/* 287 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_baseKeysIn.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(/*! ./isObject */ 206),
+	    isPrototype = __webpack_require__(/*! ./_isPrototype */ 246),
+	    nativeKeysIn = __webpack_require__(/*! ./_nativeKeysIn */ 288);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * The base implementation of `_.keysIn` which doesn't treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeysIn(object) {
+	  if (!isObject(object)) {
+	    return nativeKeysIn(object);
+	  }
+	  var isProto = isPrototype(object),
+	      result = [];
+	
+	  for (var key in object) {
+	    if (!(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = baseKeysIn;
+
+
+/***/ },
+/* 288 */
+/*!***************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_nativeKeysIn.js ***!
+  \***************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * This function is like
+	 * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+	 * except that it includes inherited enumerable properties.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function nativeKeysIn(object) {
+	  var result = [];
+	  if (object != null) {
+	    for (var key in Object(object)) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = nativeKeysIn;
+
+
+/***/ },
+/* 289 */
+/*!*************************************************************!*\
+  !*** ./~/redux-actions/~/lodash/_customDefaultsAssignIn.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var eq = __webpack_require__(/*! ./eq */ 277);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Used by `_.defaults` to customize its `_.assignIn` use to assign properties
+	 * of source objects to the destination object for all destination properties
+	 * that resolve to `undefined`.
+	 *
+	 * @private
+	 * @param {*} objValue The destination value.
+	 * @param {*} srcValue The source value.
+	 * @param {string} key The key of the property to assign.
+	 * @param {Object} object The parent object of `objValue`.
+	 * @returns {*} Returns the value to assign.
+	 */
+	function customDefaultsAssignIn(objValue, srcValue, key, object) {
+	  if (objValue === undefined ||
+	      (eq(objValue, objectProto[key]) && !hasOwnProperty.call(object, key))) {
+	    return srcValue;
+	  }
+	  return objValue;
+	}
+	
+	module.exports = customDefaultsAssignIn;
+
+
+/***/ },
+/* 290 */
+/*!**********************************************!*\
+  !*** ./~/redux-actions/lib/arrayToObject.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function (array, callback) {
+	  return array.reduce(function (partialObject, element) {
+	    return callback(partialObject, element);
+	  }, {});
+	};
+
+/***/ },
+/* 291 */
+/*!*************************************************!*\
+  !*** ./~/redux-actions/lib/namespaceActions.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.defaultNamespace = exports.unflattenActionCreators = exports.flattenActionMap = undefined;
+	
+	var _camelCase = __webpack_require__(/*! ./camelCase */ 268);
+	
+	var _camelCase2 = _interopRequireDefault(_camelCase);
+	
+	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 211);
+	
+	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var defaultNamespace = '/';
+	
+	function flattenActionMap(actionMap) {
+	  var namespace = arguments.length <= 1 || arguments[1] === undefined ? defaultNamespace : arguments[1];
+	  var partialFlatActionMap = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+	  var partialFlatActionType = arguments.length <= 3 || arguments[3] === undefined ? '' : arguments[3];
+	
+	  function connectNamespace(type) {
+	    return partialFlatActionType ? '' + partialFlatActionType + namespace + type : type;
+	  }
+	
+	  Object.getOwnPropertyNames(actionMap).forEach(function (type) {
+	    var nextNamespace = connectNamespace(type);
+	    var actionMapValue = actionMap[type];
+	
+	    if (!(0, _isPlainObject2.default)(actionMapValue)) {
+	      partialFlatActionMap[nextNamespace] = actionMap[type];
+	    } else {
+	      flattenActionMap(actionMap[type], namespace, partialFlatActionMap, nextNamespace);
+	    }
+	  });
+	  return partialFlatActionMap;
+	}
+	
+	function unflattenActionCreators(flatActionCreators) {
+	  var namespace = arguments.length <= 1 || arguments[1] === undefined ? defaultNamespace : arguments[1];
+	
+	  function unflatten(flatActionType) {
+	    var partialNestedActionCreators = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	    var partialFlatActionTypePath = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];
+	
+	    var nextNamespace = (0, _camelCase2.default)(partialFlatActionTypePath.shift());
+	    if (partialFlatActionTypePath.length) {
+	      if (!partialNestedActionCreators[nextNamespace]) {
+	        partialNestedActionCreators[nextNamespace] = {};
+	      }
+	      unflatten(flatActionType, partialNestedActionCreators[nextNamespace], partialFlatActionTypePath);
+	    } else {
+	      partialNestedActionCreators[nextNamespace] = flatActionCreators[flatActionType];
+	    }
+	  }
+	
+	  var partialNestedActionCreators = {};
+	  Object.getOwnPropertyNames(flatActionCreators).forEach(function (type) {
+	    return unflatten(type, partialNestedActionCreators, type.split(namespace));
+	  });
+	  return partialNestedActionCreators;
+	}
+	
+	exports.flattenActionMap = flattenActionMap;
+	exports.unflattenActionCreators = unflattenActionCreators;
+	exports.defaultNamespace = defaultNamespace;
+
+/***/ },
+/* 292 */
 /*!************************************!*\
   !*** ./~/react-redux/lib/index.js ***!
   \************************************/
@@ -23604,11 +27356,11 @@
 	exports.__esModule = true;
 	exports.connect = exports.Provider = undefined;
 	
-	var _Provider = __webpack_require__(/*! ./components/Provider */ 196);
+	var _Provider = __webpack_require__(/*! ./components/Provider */ 293);
 	
 	var _Provider2 = _interopRequireDefault(_Provider);
 	
-	var _connect = __webpack_require__(/*! ./components/connect */ 199);
+	var _connect = __webpack_require__(/*! ./components/connect */ 296);
 	
 	var _connect2 = _interopRequireDefault(_connect);
 	
@@ -23618,7 +27370,7 @@
 	exports.connect = _connect2["default"];
 
 /***/ },
-/* 196 */
+/* 293 */
 /*!**************************************************!*\
   !*** ./~/react-redux/lib/components/Provider.js ***!
   \**************************************************/
@@ -23631,11 +27383,11 @@
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
-	var _storeShape = __webpack_require__(/*! ../utils/storeShape */ 197);
+	var _storeShape = __webpack_require__(/*! ../utils/storeShape */ 294);
 	
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 	
-	var _warning = __webpack_require__(/*! ../utils/warning */ 198);
+	var _warning = __webpack_require__(/*! ../utils/warning */ 295);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -23705,7 +27457,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 197 */
+/* 294 */
 /*!***********************************************!*\
   !*** ./~/react-redux/lib/utils/storeShape.js ***!
   \***********************************************/
@@ -23724,7 +27476,7 @@
 	});
 
 /***/ },
-/* 198 */
+/* 295 */
 /*!********************************************!*\
   !*** ./~/react-redux/lib/utils/warning.js ***!
   \********************************************/
@@ -23756,7 +27508,7 @@
 	}
 
 /***/ },
-/* 199 */
+/* 296 */
 /*!*************************************************!*\
   !*** ./~/react-redux/lib/components/connect.js ***!
   \*************************************************/
@@ -23771,31 +27523,31 @@
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
-	var _storeShape = __webpack_require__(/*! ../utils/storeShape */ 197);
+	var _storeShape = __webpack_require__(/*! ../utils/storeShape */ 294);
 	
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 	
-	var _shallowEqual = __webpack_require__(/*! ../utils/shallowEqual */ 200);
+	var _shallowEqual = __webpack_require__(/*! ../utils/shallowEqual */ 297);
 	
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 	
-	var _wrapActionCreators = __webpack_require__(/*! ../utils/wrapActionCreators */ 201);
+	var _wrapActionCreators = __webpack_require__(/*! ../utils/wrapActionCreators */ 298);
 	
 	var _wrapActionCreators2 = _interopRequireDefault(_wrapActionCreators);
 	
-	var _warning = __webpack_require__(/*! ../utils/warning */ 198);
+	var _warning = __webpack_require__(/*! ../utils/warning */ 295);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 202);
+	var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 299);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 206);
+	var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 303);
 	
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 207);
+	var _invariant = __webpack_require__(/*! invariant */ 304);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -24158,7 +27910,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 200 */
+/* 297 */
 /*!*************************************************!*\
   !*** ./~/react-redux/lib/utils/shallowEqual.js ***!
   \*************************************************/
@@ -24192,7 +27944,7 @@
 	}
 
 /***/ },
-/* 201 */
+/* 298 */
 /*!*******************************************************!*\
   !*** ./~/react-redux/lib/utils/wrapActionCreators.js ***!
   \*******************************************************/
@@ -24212,14 +27964,14 @@
 	}
 
 /***/ },
-/* 202 */
+/* 299 */
 /*!*************************************************!*\
   !*** ./~/react-redux/~/lodash/isPlainObject.js ***!
   \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(/*! ./_getPrototype */ 203),
-	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 205);
+	var getPrototype = __webpack_require__(/*! ./_getPrototype */ 300),
+	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 302);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -24289,13 +28041,13 @@
 
 
 /***/ },
-/* 203 */
+/* 300 */
 /*!*************************************************!*\
   !*** ./~/react-redux/~/lodash/_getPrototype.js ***!
   \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(/*! ./_overArg */ 204);
+	var overArg = __webpack_require__(/*! ./_overArg */ 301);
 	
 	/** Built-in value references. */
 	var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -24304,7 +28056,7 @@
 
 
 /***/ },
-/* 204 */
+/* 301 */
 /*!********************************************!*\
   !*** ./~/react-redux/~/lodash/_overArg.js ***!
   \********************************************/
@@ -24328,7 +28080,7 @@
 
 
 /***/ },
-/* 205 */
+/* 302 */
 /*!************************************************!*\
   !*** ./~/react-redux/~/lodash/isObjectLike.js ***!
   \************************************************/
@@ -24366,7 +28118,7 @@
 
 
 /***/ },
-/* 206 */
+/* 303 */
 /*!**********************************************************!*\
   !*** ./~/react-redux/~/hoist-non-react-statics/index.js ***!
   \**********************************************************/
@@ -24425,7 +28177,7 @@
 
 
 /***/ },
-/* 207 */
+/* 304 */
 /*!**********************************************!*\
   !*** ./~/react-redux/~/invariant/browser.js ***!
   \**********************************************/
@@ -24486,7 +28238,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 208 */
+/* 305 */
 /*!*************************************!*\
   !*** ./~/react-router/lib/index.js ***!
   \*************************************/
@@ -24497,7 +28249,7 @@
 	exports.__esModule = true;
 	exports.createMemoryHistory = exports.hashHistory = exports.browserHistory = exports.applyRouterMiddleware = exports.formatPattern = exports.useRouterHistory = exports.match = exports.routerShape = exports.locationShape = exports.PropTypes = exports.RoutingContext = exports.RouterContext = exports.createRoutes = exports.useRoutes = exports.RouteContext = exports.Lifecycle = exports.History = exports.Route = exports.Redirect = exports.IndexRoute = exports.IndexRedirect = exports.withRouter = exports.IndexLink = exports.Link = exports.Router = undefined;
 	
-	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 209);
+	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 306);
 	
 	Object.defineProperty(exports, 'createRoutes', {
 	  enumerable: true,
@@ -24506,7 +28258,7 @@
 	  }
 	});
 	
-	var _PropTypes2 = __webpack_require__(/*! ./PropTypes */ 210);
+	var _PropTypes2 = __webpack_require__(/*! ./PropTypes */ 307);
 	
 	Object.defineProperty(exports, 'locationShape', {
 	  enumerable: true,
@@ -24521,7 +28273,7 @@
 	  }
 	});
 	
-	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 215);
+	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 312);
 	
 	Object.defineProperty(exports, 'formatPattern', {
 	  enumerable: true,
@@ -24530,85 +28282,85 @@
 	  }
 	});
 	
-	var _Router2 = __webpack_require__(/*! ./Router */ 217);
+	var _Router2 = __webpack_require__(/*! ./Router */ 314);
 	
 	var _Router3 = _interopRequireDefault(_Router2);
 	
-	var _Link2 = __webpack_require__(/*! ./Link */ 248);
+	var _Link2 = __webpack_require__(/*! ./Link */ 345);
 	
 	var _Link3 = _interopRequireDefault(_Link2);
 	
-	var _IndexLink2 = __webpack_require__(/*! ./IndexLink */ 249);
+	var _IndexLink2 = __webpack_require__(/*! ./IndexLink */ 346);
 	
 	var _IndexLink3 = _interopRequireDefault(_IndexLink2);
 	
-	var _withRouter2 = __webpack_require__(/*! ./withRouter */ 250);
+	var _withRouter2 = __webpack_require__(/*! ./withRouter */ 347);
 	
 	var _withRouter3 = _interopRequireDefault(_withRouter2);
 	
-	var _IndexRedirect2 = __webpack_require__(/*! ./IndexRedirect */ 252);
+	var _IndexRedirect2 = __webpack_require__(/*! ./IndexRedirect */ 349);
 	
 	var _IndexRedirect3 = _interopRequireDefault(_IndexRedirect2);
 	
-	var _IndexRoute2 = __webpack_require__(/*! ./IndexRoute */ 254);
+	var _IndexRoute2 = __webpack_require__(/*! ./IndexRoute */ 351);
 	
 	var _IndexRoute3 = _interopRequireDefault(_IndexRoute2);
 	
-	var _Redirect2 = __webpack_require__(/*! ./Redirect */ 253);
+	var _Redirect2 = __webpack_require__(/*! ./Redirect */ 350);
 	
 	var _Redirect3 = _interopRequireDefault(_Redirect2);
 	
-	var _Route2 = __webpack_require__(/*! ./Route */ 255);
+	var _Route2 = __webpack_require__(/*! ./Route */ 352);
 	
 	var _Route3 = _interopRequireDefault(_Route2);
 	
-	var _History2 = __webpack_require__(/*! ./History */ 256);
+	var _History2 = __webpack_require__(/*! ./History */ 353);
 	
 	var _History3 = _interopRequireDefault(_History2);
 	
-	var _Lifecycle2 = __webpack_require__(/*! ./Lifecycle */ 257);
+	var _Lifecycle2 = __webpack_require__(/*! ./Lifecycle */ 354);
 	
 	var _Lifecycle3 = _interopRequireDefault(_Lifecycle2);
 	
-	var _RouteContext2 = __webpack_require__(/*! ./RouteContext */ 258);
+	var _RouteContext2 = __webpack_require__(/*! ./RouteContext */ 355);
 	
 	var _RouteContext3 = _interopRequireDefault(_RouteContext2);
 	
-	var _useRoutes2 = __webpack_require__(/*! ./useRoutes */ 259);
+	var _useRoutes2 = __webpack_require__(/*! ./useRoutes */ 356);
 	
 	var _useRoutes3 = _interopRequireDefault(_useRoutes2);
 	
-	var _RouterContext2 = __webpack_require__(/*! ./RouterContext */ 245);
+	var _RouterContext2 = __webpack_require__(/*! ./RouterContext */ 342);
 	
 	var _RouterContext3 = _interopRequireDefault(_RouterContext2);
 	
-	var _RoutingContext2 = __webpack_require__(/*! ./RoutingContext */ 260);
+	var _RoutingContext2 = __webpack_require__(/*! ./RoutingContext */ 357);
 	
 	var _RoutingContext3 = _interopRequireDefault(_RoutingContext2);
 	
 	var _PropTypes3 = _interopRequireDefault(_PropTypes2);
 	
-	var _match2 = __webpack_require__(/*! ./match */ 261);
+	var _match2 = __webpack_require__(/*! ./match */ 358);
 	
 	var _match3 = _interopRequireDefault(_match2);
 	
-	var _useRouterHistory2 = __webpack_require__(/*! ./useRouterHistory */ 265);
+	var _useRouterHistory2 = __webpack_require__(/*! ./useRouterHistory */ 362);
 	
 	var _useRouterHistory3 = _interopRequireDefault(_useRouterHistory2);
 	
-	var _applyRouterMiddleware2 = __webpack_require__(/*! ./applyRouterMiddleware */ 266);
+	var _applyRouterMiddleware2 = __webpack_require__(/*! ./applyRouterMiddleware */ 363);
 	
 	var _applyRouterMiddleware3 = _interopRequireDefault(_applyRouterMiddleware2);
 	
-	var _browserHistory2 = __webpack_require__(/*! ./browserHistory */ 267);
+	var _browserHistory2 = __webpack_require__(/*! ./browserHistory */ 364);
 	
 	var _browserHistory3 = _interopRequireDefault(_browserHistory2);
 	
-	var _hashHistory2 = __webpack_require__(/*! ./hashHistory */ 270);
+	var _hashHistory2 = __webpack_require__(/*! ./hashHistory */ 367);
 	
 	var _hashHistory3 = _interopRequireDefault(_hashHistory2);
 	
-	var _createMemoryHistory2 = __webpack_require__(/*! ./createMemoryHistory */ 262);
+	var _createMemoryHistory2 = __webpack_require__(/*! ./createMemoryHistory */ 359);
 	
 	var _createMemoryHistory3 = _interopRequireDefault(_createMemoryHistory2);
 	
@@ -24650,7 +28402,7 @@
 	exports.createMemoryHistory = _createMemoryHistory3.default;
 
 /***/ },
-/* 209 */
+/* 306 */
 /*!******************************************!*\
   !*** ./~/react-router/lib/RouteUtils.js ***!
   \******************************************/
@@ -24751,7 +28503,7 @@
 	}
 
 /***/ },
-/* 210 */
+/* 307 */
 /*!*****************************************!*\
   !*** ./~/react-router/lib/PropTypes.js ***!
   \*****************************************/
@@ -24764,15 +28516,15 @@
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
-	var _deprecateObjectProperties = __webpack_require__(/*! ./deprecateObjectProperties */ 211);
+	var _deprecateObjectProperties = __webpack_require__(/*! ./deprecateObjectProperties */ 308);
 	
 	var _deprecateObjectProperties2 = _interopRequireDefault(_deprecateObjectProperties);
 	
-	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 214);
+	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 311);
 	
 	var InternalPropTypes = _interopRequireWildcard(_InternalPropTypes);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -24861,7 +28613,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 211 */
+/* 308 */
 /*!*********************************************************!*\
   !*** ./~/react-router/lib/deprecateObjectProperties.js ***!
   \*********************************************************/
@@ -24872,7 +28624,7 @@
 	exports.__esModule = true;
 	exports.canUseMembrane = undefined;
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -24945,7 +28697,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 212 */
+/* 309 */
 /*!*********************************************!*\
   !*** ./~/react-router/lib/routerWarning.js ***!
   \*********************************************/
@@ -24957,7 +28709,7 @@
 	exports.default = routerWarning;
 	exports._resetWarned = _resetWarned;
 	
-	var _warning = __webpack_require__(/*! warning */ 213);
+	var _warning = __webpack_require__(/*! warning */ 310);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -24989,7 +28741,7 @@
 	}
 
 /***/ },
-/* 213 */
+/* 310 */
 /*!*********************************************!*\
   !*** ./~/react-router/~/warning/browser.js ***!
   \*********************************************/
@@ -25059,7 +28811,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 214 */
+/* 311 */
 /*!*************************************************!*\
   !*** ./~/react-router/lib/InternalPropTypes.js ***!
   \*************************************************/
@@ -25099,7 +28851,7 @@
 	var routes = exports.routes = oneOfType([route, arrayOf(route)]);
 
 /***/ },
-/* 215 */
+/* 312 */
 /*!********************************************!*\
   !*** ./~/react-router/lib/PatternUtils.js ***!
   \********************************************/
@@ -25114,7 +28866,7 @@
 	exports.getParams = getParams;
 	exports.formatPattern = formatPattern;
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -25320,7 +29072,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 216 */
+/* 313 */
 /*!***********************************************!*\
   !*** ./~/react-router/~/invariant/browser.js ***!
   \***********************************************/
@@ -25381,7 +29133,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 217 */
+/* 314 */
 /*!**************************************!*\
   !*** ./~/react-router/lib/Router.js ***!
   \**************************************/
@@ -25393,15 +29145,15 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createHashHistory = __webpack_require__(/*! history/lib/createHashHistory */ 218);
+	var _createHashHistory = __webpack_require__(/*! history/lib/createHashHistory */ 315);
 	
 	var _createHashHistory2 = _interopRequireDefault(_createHashHistory);
 	
-	var _useQueries = __webpack_require__(/*! history/lib/useQueries */ 234);
+	var _useQueries = __webpack_require__(/*! history/lib/useQueries */ 331);
 	
 	var _useQueries2 = _interopRequireDefault(_useQueries);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -25409,21 +29161,21 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 237);
+	var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 334);
 	
 	var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 	
-	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 214);
+	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 311);
 	
-	var _RouterContext = __webpack_require__(/*! ./RouterContext */ 245);
+	var _RouterContext = __webpack_require__(/*! ./RouterContext */ 342);
 	
 	var _RouterContext2 = _interopRequireDefault(_RouterContext);
 	
-	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 209);
+	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 306);
 	
-	var _RouterUtils = __webpack_require__(/*! ./RouterUtils */ 247);
+	var _RouterUtils = __webpack_require__(/*! ./RouterUtils */ 344);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -25614,7 +29366,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 218 */
+/* 315 */
 /*!***********************************************************!*\
   !*** ./~/react-router/~/history/lib/createHashHistory.js ***!
   \***********************************************************/
@@ -25628,25 +29380,25 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _Actions = __webpack_require__(/*! ./Actions */ 220);
+	var _Actions = __webpack_require__(/*! ./Actions */ 317);
 	
-	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 221);
+	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 318);
 	
-	var _ExecutionEnvironment = __webpack_require__(/*! ./ExecutionEnvironment */ 222);
+	var _ExecutionEnvironment = __webpack_require__(/*! ./ExecutionEnvironment */ 319);
 	
-	var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 223);
+	var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 320);
 	
-	var _DOMStateStorage = __webpack_require__(/*! ./DOMStateStorage */ 224);
+	var _DOMStateStorage = __webpack_require__(/*! ./DOMStateStorage */ 321);
 	
-	var _createDOMHistory = __webpack_require__(/*! ./createDOMHistory */ 225);
+	var _createDOMHistory = __webpack_require__(/*! ./createDOMHistory */ 322);
 	
 	var _createDOMHistory2 = _interopRequireDefault(_createDOMHistory);
 	
@@ -25869,7 +29621,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 219 */
+/* 316 */
 /*!*******************************************************!*\
   !*** ./~/react-router/~/history/~/warning/browser.js ***!
   \*******************************************************/
@@ -25939,7 +29691,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 220 */
+/* 317 */
 /*!*************************************************!*\
   !*** ./~/react-router/~/history/lib/Actions.js ***!
   \*************************************************/
@@ -25978,7 +29730,7 @@
 	};
 
 /***/ },
-/* 221 */
+/* 318 */
 /*!***************************************************!*\
   !*** ./~/react-router/~/history/lib/PathUtils.js ***!
   \***************************************************/
@@ -25992,7 +29744,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -26034,7 +29786,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 222 */
+/* 319 */
 /*!**************************************************************!*\
   !*** ./~/react-router/~/history/lib/ExecutionEnvironment.js ***!
   \**************************************************************/
@@ -26047,7 +29799,7 @@
 	exports.canUseDOM = canUseDOM;
 
 /***/ },
-/* 223 */
+/* 320 */
 /*!**************************************************!*\
   !*** ./~/react-router/~/history/lib/DOMUtils.js ***!
   \**************************************************/
@@ -26130,7 +29882,7 @@
 	}
 
 /***/ },
-/* 224 */
+/* 321 */
 /*!*********************************************************!*\
   !*** ./~/react-router/~/history/lib/DOMStateStorage.js ***!
   \*********************************************************/
@@ -26145,7 +29897,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -26212,7 +29964,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 225 */
+/* 322 */
 /*!**********************************************************!*\
   !*** ./~/react-router/~/history/lib/createDOMHistory.js ***!
   \**********************************************************/
@@ -26226,15 +29978,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _ExecutionEnvironment = __webpack_require__(/*! ./ExecutionEnvironment */ 222);
+	var _ExecutionEnvironment = __webpack_require__(/*! ./ExecutionEnvironment */ 319);
 	
-	var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 223);
+	var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 320);
 	
-	var _createHistory = __webpack_require__(/*! ./createHistory */ 226);
+	var _createHistory = __webpack_require__(/*! ./createHistory */ 323);
 	
 	var _createHistory2 = _interopRequireDefault(_createHistory);
 	
@@ -26261,7 +30013,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 226 */
+/* 323 */
 /*!*******************************************************!*\
   !*** ./~/react-router/~/history/lib/createHistory.js ***!
   \*******************************************************/
@@ -26275,29 +30027,29 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _deepEqual = __webpack_require__(/*! deep-equal */ 227);
+	var _deepEqual = __webpack_require__(/*! deep-equal */ 324);
 	
 	var _deepEqual2 = _interopRequireDefault(_deepEqual);
 	
-	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 221);
+	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 318);
 	
-	var _AsyncUtils = __webpack_require__(/*! ./AsyncUtils */ 230);
+	var _AsyncUtils = __webpack_require__(/*! ./AsyncUtils */ 327);
 	
-	var _Actions = __webpack_require__(/*! ./Actions */ 220);
+	var _Actions = __webpack_require__(/*! ./Actions */ 317);
 	
-	var _createLocation2 = __webpack_require__(/*! ./createLocation */ 231);
+	var _createLocation2 = __webpack_require__(/*! ./createLocation */ 328);
 	
 	var _createLocation3 = _interopRequireDefault(_createLocation2);
 	
-	var _runTransitionHook = __webpack_require__(/*! ./runTransitionHook */ 232);
+	var _runTransitionHook = __webpack_require__(/*! ./runTransitionHook */ 329);
 	
 	var _runTransitionHook2 = _interopRequireDefault(_runTransitionHook);
 	
-	var _deprecate = __webpack_require__(/*! ./deprecate */ 233);
+	var _deprecate = __webpack_require__(/*! ./deprecate */ 330);
 	
 	var _deprecate2 = _interopRequireDefault(_deprecate);
 	
@@ -26558,15 +30310,15 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 227 */
+/* 324 */
 /*!********************************************************!*\
   !*** ./~/react-router/~/history/~/deep-equal/index.js ***!
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(/*! ./lib/keys.js */ 228);
-	var isArguments = __webpack_require__(/*! ./lib/is_arguments.js */ 229);
+	var objectKeys = __webpack_require__(/*! ./lib/keys.js */ 325);
+	var isArguments = __webpack_require__(/*! ./lib/is_arguments.js */ 326);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -26661,7 +30413,7 @@
 
 
 /***/ },
-/* 228 */
+/* 325 */
 /*!***********************************************************!*\
   !*** ./~/react-router/~/history/~/deep-equal/lib/keys.js ***!
   \***********************************************************/
@@ -26679,7 +30431,7 @@
 
 
 /***/ },
-/* 229 */
+/* 326 */
 /*!*******************************************************************!*\
   !*** ./~/react-router/~/history/~/deep-equal/lib/is_arguments.js ***!
   \*******************************************************************/
@@ -26708,7 +30460,7 @@
 
 
 /***/ },
-/* 230 */
+/* 327 */
 /*!****************************************************!*\
   !*** ./~/react-router/~/history/lib/AsyncUtils.js ***!
   \****************************************************/
@@ -26774,7 +30526,7 @@
 	}
 
 /***/ },
-/* 231 */
+/* 328 */
 /*!********************************************************!*\
   !*** ./~/react-router/~/history/lib/createLocation.js ***!
   \********************************************************/
@@ -26788,13 +30540,13 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _Actions = __webpack_require__(/*! ./Actions */ 220);
+	var _Actions = __webpack_require__(/*! ./Actions */ 317);
 	
-	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 221);
+	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 318);
 	
 	function createLocation() {
 	  var location = arguments.length <= 0 || arguments[0] === undefined ? '/' : arguments[0];
@@ -26834,7 +30586,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 232 */
+/* 329 */
 /*!***********************************************************!*\
   !*** ./~/react-router/~/history/lib/runTransitionHook.js ***!
   \***********************************************************/
@@ -26846,7 +30598,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -26867,7 +30619,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 233 */
+/* 330 */
 /*!***************************************************!*\
   !*** ./~/react-router/~/history/lib/deprecate.js ***!
   \***************************************************/
@@ -26879,7 +30631,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -26895,7 +30647,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 234 */
+/* 331 */
 /*!****************************************************!*\
   !*** ./~/react-router/~/history/lib/useQueries.js ***!
   \****************************************************/
@@ -26909,19 +30661,19 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _queryString = __webpack_require__(/*! query-string */ 235);
+	var _queryString = __webpack_require__(/*! query-string */ 332);
 	
-	var _runTransitionHook = __webpack_require__(/*! ./runTransitionHook */ 232);
+	var _runTransitionHook = __webpack_require__(/*! ./runTransitionHook */ 329);
 	
 	var _runTransitionHook2 = _interopRequireDefault(_runTransitionHook);
 	
-	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 221);
+	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 318);
 	
-	var _deprecate = __webpack_require__(/*! ./deprecate */ 233);
+	var _deprecate = __webpack_require__(/*! ./deprecate */ 330);
 	
 	var _deprecate2 = _interopRequireDefault(_deprecate);
 	
@@ -27080,14 +30832,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 235 */
+/* 332 */
 /*!**********************************************************!*\
   !*** ./~/react-router/~/history/~/query-string/index.js ***!
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var strictUriEncode = __webpack_require__(/*! strict-uri-encode */ 236);
+	var strictUriEncode = __webpack_require__(/*! strict-uri-encode */ 333);
 	
 	exports.extract = function (str) {
 		return str.split('?')[1] || '';
@@ -27155,7 +30907,7 @@
 
 
 /***/ },
-/* 236 */
+/* 333 */
 /*!******************************************************************************!*\
   !*** ./~/react-router/~/history/~/query-string/~/strict-uri-encode/index.js ***!
   \******************************************************************************/
@@ -27170,7 +30922,7 @@
 
 
 /***/ },
-/* 237 */
+/* 334 */
 /*!*******************************************************!*\
   !*** ./~/react-router/lib/createTransitionManager.js ***!
   \*******************************************************/
@@ -27184,25 +30936,25 @@
 	
 	exports.default = createTransitionManager;
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
-	var _computeChangedRoutes2 = __webpack_require__(/*! ./computeChangedRoutes */ 238);
+	var _computeChangedRoutes2 = __webpack_require__(/*! ./computeChangedRoutes */ 335);
 	
 	var _computeChangedRoutes3 = _interopRequireDefault(_computeChangedRoutes2);
 	
-	var _TransitionUtils = __webpack_require__(/*! ./TransitionUtils */ 239);
+	var _TransitionUtils = __webpack_require__(/*! ./TransitionUtils */ 336);
 	
-	var _isActive2 = __webpack_require__(/*! ./isActive */ 241);
+	var _isActive2 = __webpack_require__(/*! ./isActive */ 338);
 	
 	var _isActive3 = _interopRequireDefault(_isActive2);
 	
-	var _getComponents = __webpack_require__(/*! ./getComponents */ 242);
+	var _getComponents = __webpack_require__(/*! ./getComponents */ 339);
 	
 	var _getComponents2 = _interopRequireDefault(_getComponents);
 	
-	var _matchRoutes = __webpack_require__(/*! ./matchRoutes */ 244);
+	var _matchRoutes = __webpack_require__(/*! ./matchRoutes */ 341);
 	
 	var _matchRoutes2 = _interopRequireDefault(_matchRoutes);
 	
@@ -27481,7 +31233,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 238 */
+/* 335 */
 /*!****************************************************!*\
   !*** ./~/react-router/lib/computeChangedRoutes.js ***!
   \****************************************************/
@@ -27491,7 +31243,7 @@
 	
 	exports.__esModule = true;
 	
-	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 215);
+	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 312);
 	
 	function routeParamsChanged(route, prevState, nextState) {
 	  if (!route.path) return false;
@@ -27566,7 +31318,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 239 */
+/* 336 */
 /*!***********************************************!*\
   !*** ./~/react-router/lib/TransitionUtils.js ***!
   \***********************************************/
@@ -27579,9 +31331,9 @@
 	exports.runChangeHooks = runChangeHooks;
 	exports.runLeaveHooks = runLeaveHooks;
 	
-	var _AsyncUtils = __webpack_require__(/*! ./AsyncUtils */ 240);
+	var _AsyncUtils = __webpack_require__(/*! ./AsyncUtils */ 337);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -27697,7 +31449,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 240 */
+/* 337 */
 /*!******************************************!*\
   !*** ./~/react-router/lib/AsyncUtils.js ***!
   \******************************************/
@@ -27793,7 +31545,7 @@
 	}
 
 /***/ },
-/* 241 */
+/* 338 */
 /*!****************************************!*\
   !*** ./~/react-router/lib/isActive.js ***!
   \****************************************/
@@ -27807,7 +31559,7 @@
 	
 	exports.default = isActive;
 	
-	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 215);
+	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 312);
 	
 	function deepEqual(a, b) {
 	  if (a == b) return true;
@@ -27953,7 +31705,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 242 */
+/* 339 */
 /*!*********************************************!*\
   !*** ./~/react-router/lib/getComponents.js ***!
   \*********************************************/
@@ -27963,9 +31715,9 @@
 	
 	exports.__esModule = true;
 	
-	var _AsyncUtils = __webpack_require__(/*! ./AsyncUtils */ 240);
+	var _AsyncUtils = __webpack_require__(/*! ./AsyncUtils */ 337);
 	
-	var _makeStateWithLocation = __webpack_require__(/*! ./makeStateWithLocation */ 243);
+	var _makeStateWithLocation = __webpack_require__(/*! ./makeStateWithLocation */ 340);
 	
 	var _makeStateWithLocation2 = _interopRequireDefault(_makeStateWithLocation);
 	
@@ -28007,7 +31759,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 243 */
+/* 340 */
 /*!*****************************************************!*\
   !*** ./~/react-router/lib/makeStateWithLocation.js ***!
   \*****************************************************/
@@ -28021,9 +31773,9 @@
 	
 	exports.default = makeStateWithLocation;
 	
-	var _deprecateObjectProperties = __webpack_require__(/*! ./deprecateObjectProperties */ 211);
+	var _deprecateObjectProperties = __webpack_require__(/*! ./deprecateObjectProperties */ 308);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -28065,7 +31817,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 244 */
+/* 341 */
 /*!*******************************************!*\
   !*** ./~/react-router/lib/matchRoutes.js ***!
   \*******************************************/
@@ -28081,19 +31833,19 @@
 	
 	exports.default = matchRoutes;
 	
-	var _AsyncUtils = __webpack_require__(/*! ./AsyncUtils */ 240);
+	var _AsyncUtils = __webpack_require__(/*! ./AsyncUtils */ 337);
 	
-	var _makeStateWithLocation = __webpack_require__(/*! ./makeStateWithLocation */ 243);
+	var _makeStateWithLocation = __webpack_require__(/*! ./makeStateWithLocation */ 340);
 	
 	var _makeStateWithLocation2 = _interopRequireDefault(_makeStateWithLocation);
 	
-	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 215);
+	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 312);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
-	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 209);
+	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 306);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28325,7 +32077,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 245 */
+/* 342 */
 /*!*********************************************!*\
   !*** ./~/react-router/lib/RouterContext.js ***!
   \*********************************************/
@@ -28339,7 +32091,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -28347,17 +32099,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _deprecateObjectProperties = __webpack_require__(/*! ./deprecateObjectProperties */ 211);
+	var _deprecateObjectProperties = __webpack_require__(/*! ./deprecateObjectProperties */ 308);
 	
 	var _deprecateObjectProperties2 = _interopRequireDefault(_deprecateObjectProperties);
 	
-	var _getRouteParams = __webpack_require__(/*! ./getRouteParams */ 246);
+	var _getRouteParams = __webpack_require__(/*! ./getRouteParams */ 343);
 	
 	var _getRouteParams2 = _interopRequireDefault(_getRouteParams);
 	
-	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 209);
+	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 306);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -28490,7 +32242,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 246 */
+/* 343 */
 /*!**********************************************!*\
   !*** ./~/react-router/lib/getRouteParams.js ***!
   \**********************************************/
@@ -28500,7 +32252,7 @@
 	
 	exports.__esModule = true;
 	
-	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 215);
+	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 312);
 	
 	/**
 	 * Extracts an object of params the given route cares about from
@@ -28524,7 +32276,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 247 */
+/* 344 */
 /*!*******************************************!*\
   !*** ./~/react-router/lib/RouterUtils.js ***!
   \*******************************************/
@@ -28539,7 +32291,7 @@
 	exports.createRouterObject = createRouterObject;
 	exports.createRoutingHistory = createRoutingHistory;
 	
-	var _deprecateObjectProperties = __webpack_require__(/*! ./deprecateObjectProperties */ 211);
+	var _deprecateObjectProperties = __webpack_require__(/*! ./deprecateObjectProperties */ 308);
 	
 	var _deprecateObjectProperties2 = _interopRequireDefault(_deprecateObjectProperties);
 	
@@ -28565,7 +32317,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 248 */
+/* 345 */
 /*!************************************!*\
   !*** ./~/react-router/lib/Link.js ***!
   \************************************/
@@ -28581,15 +32333,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _PropTypes = __webpack_require__(/*! ./PropTypes */ 210);
+	var _PropTypes = __webpack_require__(/*! ./PropTypes */ 307);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28750,7 +32502,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 249 */
+/* 346 */
 /*!*****************************************!*\
   !*** ./~/react-router/lib/IndexLink.js ***!
   \*****************************************/
@@ -28766,7 +32518,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Link = __webpack_require__(/*! ./Link */ 248);
+	var _Link = __webpack_require__(/*! ./Link */ 345);
 	
 	var _Link2 = _interopRequireDefault(_Link);
 	
@@ -28786,7 +32538,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 250 */
+/* 347 */
 /*!******************************************!*\
   !*** ./~/react-router/lib/withRouter.js ***!
   \******************************************/
@@ -28800,7 +32552,7 @@
 	
 	exports.default = withRouter;
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -28808,11 +32560,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 251);
+	var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 348);
 	
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 	
-	var _PropTypes = __webpack_require__(/*! ./PropTypes */ 210);
+	var _PropTypes = __webpack_require__(/*! ./PropTypes */ 307);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28859,7 +32611,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 251 */
+/* 348 */
 /*!***********************************************************!*\
   !*** ./~/react-router/~/hoist-non-react-statics/index.js ***!
   \***********************************************************/
@@ -28918,7 +32670,7 @@
 
 
 /***/ },
-/* 252 */
+/* 349 */
 /*!*********************************************!*\
   !*** ./~/react-router/lib/IndexRedirect.js ***!
   \*********************************************/
@@ -28932,19 +32684,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _Redirect = __webpack_require__(/*! ./Redirect */ 253);
+	var _Redirect = __webpack_require__(/*! ./Redirect */ 350);
 	
 	var _Redirect2 = _interopRequireDefault(_Redirect);
 	
-	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 214);
+	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 311);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28990,7 +32742,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 253 */
+/* 350 */
 /*!****************************************!*\
   !*** ./~/react-router/lib/Redirect.js ***!
   \****************************************/
@@ -29004,15 +32756,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 209);
+	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 306);
 	
-	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 215);
+	var _PatternUtils = __webpack_require__(/*! ./PatternUtils */ 312);
 	
-	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 214);
+	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 311);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29101,7 +32853,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 254 */
+/* 351 */
 /*!******************************************!*\
   !*** ./~/react-router/lib/IndexRoute.js ***!
   \******************************************/
@@ -29115,17 +32867,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 209);
+	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 306);
 	
-	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 214);
+	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 311);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29170,7 +32922,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 255 */
+/* 352 */
 /*!*************************************!*\
   !*** ./~/react-router/lib/Route.js ***!
   \*************************************/
@@ -29184,13 +32936,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 209);
+	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 306);
 	
-	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 214);
+	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 311);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29236,7 +32988,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 256 */
+/* 353 */
 /*!***************************************!*\
   !*** ./~/react-router/lib/History.js ***!
   \***************************************/
@@ -29246,11 +32998,11 @@
 	
 	exports.__esModule = true;
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
-	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 214);
+	var _InternalPropTypes = __webpack_require__(/*! ./InternalPropTypes */ 311);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29274,7 +33026,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 257 */
+/* 354 */
 /*!*****************************************!*\
   !*** ./~/react-router/lib/Lifecycle.js ***!
   \*****************************************/
@@ -29284,7 +33036,7 @@
 	
 	exports.__esModule = true;
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -29292,7 +33044,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -29351,7 +33103,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 258 */
+/* 355 */
 /*!********************************************!*\
   !*** ./~/react-router/lib/RouteContext.js ***!
   \********************************************/
@@ -29361,7 +33113,7 @@
 	
 	exports.__esModule = true;
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -29405,7 +33157,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 259 */
+/* 356 */
 /*!*****************************************!*\
   !*** ./~/react-router/lib/useRoutes.js ***!
   \*****************************************/
@@ -29417,15 +33169,15 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _useQueries = __webpack_require__(/*! history/lib/useQueries */ 234);
+	var _useQueries = __webpack_require__(/*! history/lib/useQueries */ 331);
 	
 	var _useQueries2 = _interopRequireDefault(_useQueries);
 	
-	var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 237);
+	var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 334);
 	
 	var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -29465,7 +33217,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 260 */
+/* 357 */
 /*!**********************************************!*\
   !*** ./~/react-router/lib/RoutingContext.js ***!
   \**********************************************/
@@ -29479,11 +33231,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _RouterContext = __webpack_require__(/*! ./RouterContext */ 245);
+	var _RouterContext = __webpack_require__(/*! ./RouterContext */ 342);
 	
 	var _RouterContext2 = _interopRequireDefault(_RouterContext);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -29504,7 +33256,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 261 */
+/* 358 */
 /*!*************************************!*\
   !*** ./~/react-router/lib/match.js ***!
   \*************************************/
@@ -29516,23 +33268,23 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _Actions = __webpack_require__(/*! history/lib/Actions */ 220);
+	var _Actions = __webpack_require__(/*! history/lib/Actions */ 317);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _createMemoryHistory = __webpack_require__(/*! ./createMemoryHistory */ 262);
+	var _createMemoryHistory = __webpack_require__(/*! ./createMemoryHistory */ 359);
 	
 	var _createMemoryHistory2 = _interopRequireDefault(_createMemoryHistory);
 	
-	var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 237);
+	var _createTransitionManager = __webpack_require__(/*! ./createTransitionManager */ 334);
 	
 	var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 	
-	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 209);
+	var _RouteUtils = __webpack_require__(/*! ./RouteUtils */ 306);
 	
-	var _RouterUtils = __webpack_require__(/*! ./RouterUtils */ 247);
+	var _RouterUtils = __webpack_require__(/*! ./RouterUtils */ 344);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29596,7 +33348,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 262 */
+/* 359 */
 /*!***************************************************!*\
   !*** ./~/react-router/lib/createMemoryHistory.js ***!
   \***************************************************/
@@ -29607,15 +33359,15 @@
 	exports.__esModule = true;
 	exports.default = createMemoryHistory;
 	
-	var _useQueries = __webpack_require__(/*! history/lib/useQueries */ 234);
+	var _useQueries = __webpack_require__(/*! history/lib/useQueries */ 331);
 	
 	var _useQueries2 = _interopRequireDefault(_useQueries);
 	
-	var _useBasename = __webpack_require__(/*! history/lib/useBasename */ 263);
+	var _useBasename = __webpack_require__(/*! history/lib/useBasename */ 360);
 	
 	var _useBasename2 = _interopRequireDefault(_useBasename);
 	
-	var _createMemoryHistory = __webpack_require__(/*! history/lib/createMemoryHistory */ 264);
+	var _createMemoryHistory = __webpack_require__(/*! history/lib/createMemoryHistory */ 361);
 	
 	var _createMemoryHistory2 = _interopRequireDefault(_createMemoryHistory);
 	
@@ -29636,7 +33388,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 263 */
+/* 360 */
 /*!*****************************************************!*\
   !*** ./~/react-router/~/history/lib/useBasename.js ***!
   \*****************************************************/
@@ -29650,19 +33402,19 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _ExecutionEnvironment = __webpack_require__(/*! ./ExecutionEnvironment */ 222);
+	var _ExecutionEnvironment = __webpack_require__(/*! ./ExecutionEnvironment */ 319);
 	
-	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 221);
+	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 318);
 	
-	var _runTransitionHook = __webpack_require__(/*! ./runTransitionHook */ 232);
+	var _runTransitionHook = __webpack_require__(/*! ./runTransitionHook */ 329);
 	
 	var _runTransitionHook2 = _interopRequireDefault(_runTransitionHook);
 	
-	var _deprecate = __webpack_require__(/*! ./deprecate */ 233);
+	var _deprecate = __webpack_require__(/*! ./deprecate */ 330);
 	
 	var _deprecate2 = _interopRequireDefault(_deprecate);
 	
@@ -29803,7 +33555,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 264 */
+/* 361 */
 /*!*************************************************************!*\
   !*** ./~/react-router/~/history/lib/createMemoryHistory.js ***!
   \*************************************************************/
@@ -29817,19 +33569,19 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _warning = __webpack_require__(/*! warning */ 219);
+	var _warning = __webpack_require__(/*! warning */ 316);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 221);
+	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 318);
 	
-	var _Actions = __webpack_require__(/*! ./Actions */ 220);
+	var _Actions = __webpack_require__(/*! ./Actions */ 317);
 	
-	var _createHistory = __webpack_require__(/*! ./createHistory */ 226);
+	var _createHistory = __webpack_require__(/*! ./createHistory */ 323);
 	
 	var _createHistory2 = _interopRequireDefault(_createHistory);
 	
@@ -29966,7 +33718,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 265 */
+/* 362 */
 /*!************************************************!*\
   !*** ./~/react-router/lib/useRouterHistory.js ***!
   \************************************************/
@@ -29977,11 +33729,11 @@
 	exports.__esModule = true;
 	exports.default = useRouterHistory;
 	
-	var _useQueries = __webpack_require__(/*! history/lib/useQueries */ 234);
+	var _useQueries = __webpack_require__(/*! history/lib/useQueries */ 331);
 	
 	var _useQueries2 = _interopRequireDefault(_useQueries);
 	
-	var _useBasename = __webpack_require__(/*! history/lib/useBasename */ 263);
+	var _useBasename = __webpack_require__(/*! history/lib/useBasename */ 360);
 	
 	var _useBasename2 = _interopRequireDefault(_useBasename);
 	
@@ -29997,7 +33749,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 266 */
+/* 363 */
 /*!*****************************************************!*\
   !*** ./~/react-router/lib/applyRouterMiddleware.js ***!
   \*****************************************************/
@@ -30013,11 +33765,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _RouterContext = __webpack_require__(/*! ./RouterContext */ 245);
+	var _RouterContext = __webpack_require__(/*! ./RouterContext */ 342);
 	
 	var _RouterContext2 = _interopRequireDefault(_RouterContext);
 	
-	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 212);
+	var _routerWarning = __webpack_require__(/*! ./routerWarning */ 309);
 	
 	var _routerWarning2 = _interopRequireDefault(_routerWarning);
 	
@@ -30063,7 +33815,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 267 */
+/* 364 */
 /*!**********************************************!*\
   !*** ./~/react-router/lib/browserHistory.js ***!
   \**********************************************/
@@ -30073,11 +33825,11 @@
 	
 	exports.__esModule = true;
 	
-	var _createBrowserHistory = __webpack_require__(/*! history/lib/createBrowserHistory */ 268);
+	var _createBrowserHistory = __webpack_require__(/*! history/lib/createBrowserHistory */ 365);
 	
 	var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 	
-	var _createRouterHistory = __webpack_require__(/*! ./createRouterHistory */ 269);
+	var _createRouterHistory = __webpack_require__(/*! ./createRouterHistory */ 366);
 	
 	var _createRouterHistory2 = _interopRequireDefault(_createRouterHistory);
 	
@@ -30087,7 +33839,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 268 */
+/* 365 */
 /*!**************************************************************!*\
   !*** ./~/react-router/~/history/lib/createBrowserHistory.js ***!
   \**************************************************************/
@@ -30101,21 +33853,21 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _invariant = __webpack_require__(/*! invariant */ 216);
+	var _invariant = __webpack_require__(/*! invariant */ 313);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
-	var _Actions = __webpack_require__(/*! ./Actions */ 220);
+	var _Actions = __webpack_require__(/*! ./Actions */ 317);
 	
-	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 221);
+	var _PathUtils = __webpack_require__(/*! ./PathUtils */ 318);
 	
-	var _ExecutionEnvironment = __webpack_require__(/*! ./ExecutionEnvironment */ 222);
+	var _ExecutionEnvironment = __webpack_require__(/*! ./ExecutionEnvironment */ 319);
 	
-	var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 223);
+	var _DOMUtils = __webpack_require__(/*! ./DOMUtils */ 320);
 	
-	var _DOMStateStorage = __webpack_require__(/*! ./DOMStateStorage */ 224);
+	var _DOMStateStorage = __webpack_require__(/*! ./DOMStateStorage */ 321);
 	
-	var _createDOMHistory = __webpack_require__(/*! ./createDOMHistory */ 225);
+	var _createDOMHistory = __webpack_require__(/*! ./createDOMHistory */ 322);
 	
 	var _createDOMHistory2 = _interopRequireDefault(_createDOMHistory);
 	
@@ -30276,7 +34028,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 269 */
+/* 366 */
 /*!***************************************************!*\
   !*** ./~/react-router/lib/createRouterHistory.js ***!
   \***************************************************/
@@ -30292,7 +34044,7 @@
 	  return history;
 	};
 	
-	var _useRouterHistory = __webpack_require__(/*! ./useRouterHistory */ 265);
+	var _useRouterHistory = __webpack_require__(/*! ./useRouterHistory */ 362);
 	
 	var _useRouterHistory2 = _interopRequireDefault(_useRouterHistory);
 	
@@ -30303,7 +34055,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 270 */
+/* 367 */
 /*!*******************************************!*\
   !*** ./~/react-router/lib/hashHistory.js ***!
   \*******************************************/
@@ -30313,11 +34065,11 @@
 	
 	exports.__esModule = true;
 	
-	var _createHashHistory = __webpack_require__(/*! history/lib/createHashHistory */ 218);
+	var _createHashHistory = __webpack_require__(/*! history/lib/createHashHistory */ 315);
 	
 	var _createHashHistory2 = _interopRequireDefault(_createHashHistory);
 	
-	var _createRouterHistory = __webpack_require__(/*! ./createRouterHistory */ 269);
+	var _createRouterHistory = __webpack_require__(/*! ./createRouterHistory */ 366);
 	
 	var _createRouterHistory2 = _interopRequireDefault(_createRouterHistory);
 	
@@ -30327,36 +34079,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 271 */
-/*!*****************************!*\
-  !*** ./app/home/reducer.js ***!
-  \*****************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var initialState = {
-		here: true
-	};
-	
-	var homeReducer = function homeReducer() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-		var action = arguments[1];
-	
-		switch (action.type) {
-			case 'OPEN':
-				return state;
-		}
-		return state;
-	};
-	exports.default = homeReducer;
-
-/***/ },
-/* 272 */
+/* 368 */
 /*!******************************************!*\
   !*** ./app/home/components/home-page.js ***!
   \******************************************/
@@ -30376,7 +34099,13 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 173);
 	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 195);
+	var _reactRedux = __webpack_require__(/*! react-redux */ 292);
+	
+	var _redux2 = __webpack_require__(/*! ../redux */ 195);
+	
+	var actions = _interopRequireWildcard(_redux2);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30386,13 +34115,22 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var HomePage = function (_React$Component) {
-		_inherits(HomePage, _React$Component);
+	var HomePage = function (_Component) {
+		_inherits(HomePage, _Component);
 	
 		function HomePage(props) {
 			_classCallCheck(this, HomePage);
 	
-			return _possibleConstructorReturn(this, (HomePage.__proto__ || Object.getPrototypeOf(HomePage)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (HomePage.__proto__ || Object.getPrototypeOf(HomePage)).call(this, props));
+	
+			_this.onSayHello = function () {
+				_this.props.sayHello();
+			};
+	
+			_this.onSetUser = function () {
+				_this.props.setUser();
+			};
+			return _this;
 		}
 	
 		_createClass(HomePage, [{
@@ -30401,26 +34139,30 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'home-page' },
-					'Hello World!'
+					_react2.default.createElement(
+						'div',
+						null,
+						'Hello World!'
+					),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.onSayHello.bind() },
+						'SAY HELLO'
+					)
 				);
 			}
 		}]);
 	
 		return HomePage;
-	}(_react2.default.Component);
+	}(_react.Component);
 	
 	// CONNECT TO REDUX AND EXPORT COMPONENT 
 	
 	
-	function mapStateToProps(state) {
-		return { home: state.home };
-	}
-	
-	function mapDispatchToProps(dispatch) {
-		return {};
-	}
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(HomePage);
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+		return state.home;
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(HomePage);
 
 /***/ }
 /******/ ]);

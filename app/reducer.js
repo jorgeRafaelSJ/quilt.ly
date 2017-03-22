@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { routerReducer as routing } from 'react-router-redux';
 
-import homeReducer from './home/reducer.js';
+import home from './home/redux';
 // combines all the reducers into one main reducer object passed into the store.js
 const appReducer = combineReducers({
-	routing: routerReducer, 
-	home: homeReducer
+	routing,
+	home
 });
 
 const rootReducer = (state, action) => {

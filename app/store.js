@@ -11,5 +11,4 @@ if(window.location.host == "localhost:3002") {
 	middleware = applyMiddleware(thunk);
 }
 
-
 export default createStore(reducer, middleware);
