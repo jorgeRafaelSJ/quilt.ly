@@ -21980,6 +21980,8 @@
 		value: true
 	});
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	var _redux = __webpack_require__(/*! redux */ 173);
 	
 	var _reduxLogger = __webpack_require__(/*! redux-logger */ 187);
@@ -21997,13 +21999,23 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var middleware = void 0;
+	var enhancer = void 0;
 	if (window.location.host == "localhost:3002") {
 		middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)());
+		/* eslint-disable no-underscore-dangle */
+		var composeEnhancers = (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+			// Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+		}) : _redux.compose;
+	
+		/* eslint-enable no-underscore-dangle */
+		enhancer = composeEnhancers(middleware
+		// other store enhancers if any
+		);
 	} else {
 		middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default);
 	}
 	
-	exports.default = (0, _redux.createStore)(_reducer2.default, middleware);
+	exports.default = (0, _redux.createStore)(_reducer2.default, enhancer || middleware);
 
 /***/ },
 /* 173 */
@@ -23618,8 +23630,12 @@
 	/* ============================================================================
 	REDUCER INIT VALUE
 	============================================================================= */
+	
 	var init = {
-		user: '',
+		user: {
+			name: '',
+			age: ''
+		},
 		hello: false
 	};
 	
@@ -23633,6 +23649,7 @@
 	/* ============================================================================
 	ACTIONS - ACTION CREATORS
 	============================================================================= */
+	
 	var sayHello = exports.sayHello = (0, _reduxActions.createAction)(SAY_HELLO);
 	
 	var setUser = exports.setUser = (0, _reduxActions.createAction)(SET_USER);

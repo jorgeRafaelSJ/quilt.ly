@@ -5,8 +5,12 @@ import { push } from 'react-router-redux';
 /* ============================================================================
 REDUCER INIT VALUE
 ============================================================================= */
+
 const init = {
-	user: '',
+	user: {
+		name: '',
+		age: ''
+	},
 	hello: false
 };
 
@@ -20,6 +24,7 @@ const SET_USER = 'home/SET_USER';
 /* ============================================================================
 ACTIONS - ACTION CREATORS
 ============================================================================= */
+
 export const sayHello = createAction(SAY_HELLO);
 
 export const setUser = createAction(SET_USER);
