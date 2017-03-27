@@ -8,8 +8,8 @@ REDUCER INIT VALUE
 
 const init = {
 	user: {
-		name: '',
-		age: ''
+		first: '',
+		last: ''
 	},
 	hello: false
 };
@@ -19,7 +19,9 @@ ACTIONS CONSTANTS
 ============================================================================= */
 
 const SAY_HELLO = 'home/SAY_HELLO';
-const SET_USER = 'home/SET_USER';
+const CLEAR_FORM = 'home/CLEAR_FORM';
+const CHANGE_FIRST = 'home/CHANGE_FIRST';
+const CHANGE_LAST = 'home/CHANGE_LAST';
 
 /* ============================================================================
 ACTIONS - ACTION CREATORS
@@ -27,7 +29,11 @@ ACTIONS - ACTION CREATORS
 
 export const sayHello = createAction(SAY_HELLO);
 
-export const setUser = createAction(SET_USER);
+export const clearForm = createAction(CLEAR_FORM);
+
+export const changeFirst = createAction(CHANGE_FIRST, (first) => ({first}));
+
+export const changeLast = createAction(CHANGE_LAST, (last) => ({last}));
 
 /* ============================================================================
 REDUCER --- ACTION HANDLER
@@ -38,10 +44,28 @@ export default handleActions({
 		...state,
 		hello: true
 	}),
-	[SET_USER] : (state, action) => {
+	[CHANGE_FIRST] : (state, action) => {
 		return {
 			...state,
-			user: action.payload.user
+			user: {
+				...state.user,
+				first: action.payload.first
+			}	
+		}
+	},
+	[CHANGE_LAST] : (state, action) => {
+		return {
+			...state,
+			user: {
+				...state.user,
+				last: action.payload.last
+			}	
+		}
+	},
+	[CLEAR_FORM] : (state, action) => {
+		return {
+			...state,
+			user: init.user
 		}
 	}
 }, init);

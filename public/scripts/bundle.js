@@ -23615,7 +23615,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.setUser = exports.sayHello = undefined;
+	exports.changeLast = exports.changeFirst = exports.clearForm = exports.sayHello = undefined;
 	
 	var _handleActions;
 	
@@ -23633,8 +23633,8 @@
 	
 	var init = {
 		user: {
-			name: '',
-			age: ''
+			first: '',
+			last: ''
 		},
 		hello: false
 	};
@@ -23644,7 +23644,9 @@
 	============================================================================= */
 	
 	var SAY_HELLO = 'home/SAY_HELLO';
-	var SET_USER = 'home/SET_USER';
+	var CLEAR_FORM = 'home/CLEAR_FORM';
+	var CHANGE_FIRST = 'home/CHANGE_FIRST';
+	var CHANGE_LAST = 'home/CHANGE_LAST';
 	
 	/* ============================================================================
 	ACTIONS - ACTION CREATORS
@@ -23652,7 +23654,15 @@
 	
 	var sayHello = exports.sayHello = (0, _reduxActions.createAction)(SAY_HELLO);
 	
-	var setUser = exports.setUser = (0, _reduxActions.createAction)(SET_USER);
+	var clearForm = exports.clearForm = (0, _reduxActions.createAction)(CLEAR_FORM);
+	
+	var changeFirst = exports.changeFirst = (0, _reduxActions.createAction)(CHANGE_FIRST, function (first) {
+		return { first: first };
+	});
+	
+	var changeLast = exports.changeLast = (0, _reduxActions.createAction)(CHANGE_LAST, function (last) {
+		return { last: last };
+	});
 	
 	/* ============================================================================
 	REDUCER --- ACTION HANDLER
@@ -23662,9 +23672,21 @@
 		return _extends({}, state, {
 			hello: true
 		});
-	}), _defineProperty(_handleActions, SET_USER, function (state, action) {
+	}), _defineProperty(_handleActions, CHANGE_FIRST, function (state, action) {
 		return _extends({}, state, {
-			user: action.payload.user
+			user: _extends({}, state.user, {
+				first: action.payload.first
+			})
+		});
+	}), _defineProperty(_handleActions, CHANGE_LAST, function (state, action) {
+		return _extends({}, state, {
+			user: _extends({}, state.user, {
+				last: action.payload.last
+			})
+		});
+	}), _defineProperty(_handleActions, CLEAR_FORM, function (state, action) {
+		return _extends({}, state, {
+			user: init.user
 		});
 	}), _handleActions), init);
 
@@ -34144,8 +34166,17 @@
 				_this.props.sayHello();
 			};
 	
-			_this.onSetUser = function () {
-				_this.props.setUser();
+			_this.onClearForm = function (e) {
+				e.preventDefault();
+				_this.props.clearForm();
+			};
+	
+			_this.onChangeFirst = function (el) {
+				_this.props.changeFirst(el.target.value);
+			};
+	
+			_this.onChangeLast = function (el) {
+				_this.props.changeLast(el.target.value);
 			};
 			return _this;
 		}
@@ -34165,6 +34196,25 @@
 						'button',
 						{ onClick: this.onSayHello.bind() },
 						'SAY HELLO'
+					),
+					_react2.default.createElement(
+						'form',
+						null,
+						_react2.default.createElement('input', {
+							placeholder: 'First',
+							value: this.props.user.first,
+							onChange: this.onChangeFirst.bind(this)
+						}),
+						_react2.default.createElement('input', {
+							placeholder: 'Last',
+							value: this.props.user.last,
+							onChange: this.onChangeLast.bind(this)
+						}),
+						_react2.default.createElement(
+							'button',
+							{ onClick: this.onClearForm.bind() },
+							'Clear Form'
+						)
 					)
 				);
 			}
@@ -34173,9 +34223,22 @@
 		return HomePage;
 	}(_react.Component);
 	
+	//PROPTYPES
+	
+	
+	HomePage.propTypes = {
+		hello: _react2.default.PropTypes.bool.isRequired,
+		user: _react2.default.PropTypes.shape({
+			first: _react2.default.PropTypes.string.isRequired,
+			last: _react2.default.PropTypes.string.isRequired
+		}).isRequired,
+		sayHello: _react2.default.PropTypes.func.isRequired,
+		clearForm: _react2.default.PropTypes.func.isRequired,
+		changeLast: _react2.default.PropTypes.func.isRequired,
+		changeFirst: _react2.default.PropTypes.func.isRequired
+	};
+	
 	// CONNECT TO REDUX AND EXPORT COMPONENT 
-	
-	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
 		return state.home;
 	};
