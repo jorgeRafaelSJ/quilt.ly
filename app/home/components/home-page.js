@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../redux';
+import * as actions from '../actions/redux';
+
+//mini applications
+import RomanNumeralConverter from './roman-numeral-converter';
 
 class HomePage extends Component {
 	constructor(props) {
@@ -44,6 +47,8 @@ class HomePage extends Component {
 
 					<button onClick= {this.onClearForm.bind()}>Clear Form</button>  
 				</form> 
+
+				<RomanNumeralConverter></RomanNumeralConverter> 
 			</div>
 		);
 	}

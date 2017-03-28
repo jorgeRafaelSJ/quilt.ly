@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-template",
+  "name": "Quilt",
   "version": "1.0.0",
-  "description": "Template to expedite React Redux environment",
+  "description": "Collection of miscellaneous redux mini-apps",
   "main": "app.js",
   "scripts": {
     "dev": "webpack -d --watch"
