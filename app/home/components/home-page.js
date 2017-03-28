@@ -37,12 +37,12 @@ class HomePage extends Component {
 					<input
 						placeholder="First"
 						value = {this.props.user.first}
-						onChange = {this.onChangeFirst.bind(this)} 
+						onChange = {this.onChangeFirst.bind()} 
 						/>
 					<input
 						placeholder="Last" 
 						value = {this.props.user.last}
-						onChange = {this.onChangeLast.bind(this)}
+						onChange = {this.onChangeLast.bind()}
 						/>
 
 					<button onClick= {this.onClearForm.bind()}>Clear Form</button>  

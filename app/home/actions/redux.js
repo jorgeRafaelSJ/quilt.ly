@@ -1,6 +1,4 @@
 import { createAction, handleActions } from 'redux-actions';
-import { push } from 'react-router-redux';
-
 
 /* ============================================================================
 REDUCER INIT VALUE

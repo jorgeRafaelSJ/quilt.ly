@@ -24473,12 +24473,17 @@
 	
 	var _redux3 = _interopRequireDefault(_redux2);
 	
+	var _romanNumeralConverterRedux = __webpack_require__(/*! ./home/actions/roman-numeral-converter-redux */ 400);
+	
+	var _romanNumeralConverterRedux2 = _interopRequireDefault(_romanNumeralConverterRedux);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// combines all the reducers into one main reducer object passed into the store.js
 	var appReducer = (0, _redux.combineReducers)({
 		routing: _reactRouterRedux.routerReducer,
-		home: _redux3.default
+		home: _redux3.default,
+		rn_converter: _romanNumeralConverterRedux2.default
 	});
 	
 	var rootReducer = function rootReducer(state, action) {
@@ -35540,12 +35545,12 @@
 						_react2.default.createElement('input', {
 							placeholder: 'First',
 							value: this.props.user.first,
-							onChange: this.onChangeFirst.bind(this)
+							onChange: this.onChangeFirst.bind()
 						}),
 						_react2.default.createElement('input', {
 							placeholder: 'Last',
 							value: this.props.user.last,
-							onChange: this.onChangeLast.bind(this)
+							onChange: this.onChangeLast.bind()
 						}),
 						_react2.default.createElement(
 							'button',
@@ -35657,9 +35662,9 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 314);
 	
-	var _redux2 = __webpack_require__(/*! ../actions/redux */ 399);
+	var _romanNumeralConverterRedux = __webpack_require__(/*! ../actions/roman-numeral-converter-redux */ 400);
 	
-	var actions = _interopRequireWildcard(_redux2);
+	var actions = _interopRequireWildcard(_romanNumeralConverterRedux);
 	
 	var _quiltBox = __webpack_require__(/*! ./quilt-box */ 397);
 	
@@ -35681,7 +35686,16 @@
 		function RomanNumeralConverter(props) {
 			_classCallCheck(this, RomanNumeralConverter);
 	
-			return _possibleConstructorReturn(this, (RomanNumeralConverter.__proto__ || Object.getPrototypeOf(RomanNumeralConverter)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (RomanNumeralConverter.__proto__ || Object.getPrototypeOf(RomanNumeralConverter)).call(this, props));
+	
+			_this.onIntegerChange = function (el) {
+				_this.props.changeInteger(el.target.value);
+			};
+	
+			_this.onNumeralChange = function (el) {
+				_this.props.changeNumeral(el.target.value);
+			};
+			return _this;
 		}
 	
 		_createClass(RomanNumeralConverter, [{
@@ -35691,9 +35705,16 @@
 					_quiltBox2.default,
 					null,
 					_react2.default.createElement(
-						'div',
+						'form',
 						null,
-						' HELLO CONVERTER! '
+						_react2.default.createElement('input', {
+							value: this.props.integer,
+							onChange: this.onIntegerChange.bind()
+						}),
+						_react2.default.createElement('input', {
+							value: this.props.numeral,
+							onChange: this.onNumeralChange.bind()
+						})
 					)
 				);
 			}
@@ -35705,7 +35726,7 @@
 	
 	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
-		return state.home;
+		return state.rn_converter;
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(RomanNumeralConverter);
 
@@ -35728,8 +35749,6 @@
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _reduxActions = __webpack_require__(/*! redux-actions */ 219);
-	
-	var _reactRouterRedux = __webpack_require__(/*! react-router-redux */ 213);
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
@@ -35793,6 +35812,135 @@
 	}), _defineProperty(_handleActions, CLEAR_FORM, function (state, action) {
 		return _extends({}, state, {
 			user: init.user
+		});
+	}), _handleActions), init);
+
+/***/ },
+/* 400 */
+/*!***********************************************************!*\
+  !*** ./app/home/actions/roman-numeral-converter-redux.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.changeInteger = exports.changeNumeral = undefined;
+	
+	var _handleActions;
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _reduxActions = __webpack_require__(/*! redux-actions */ 219);
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	/* ============================================================================
+	REDUCER INIT VALUE
+	============================================================================= */
+	
+	var init = {
+		numeral: 'XXX',
+		integer: 30
+	};
+	
+	/* ============================================================================
+	ACTIONS CONSTANTS
+	============================================================================= */
+	
+	var CHANGE_NUMERAL = 'roman_numeral_converter/CHANGE_NUMERAL';
+	var CHANGE_INTEGER = 'roman_numeral_converter/CHANGE_INTEGER';
+	
+	/* ============================================================================
+	ACTIONS - ACTION CREATORS
+	============================================================================= */
+	
+	var changeNumeral = exports.changeNumeral = (0, _reduxActions.createAction)(CHANGE_NUMERAL, function (numeral) {
+		return {
+			integer: convertNumeralToInteger(numeral),
+			numeral: numeral
+		};
+	});
+	
+	var changeInteger = exports.changeInteger = (0, _reduxActions.createAction)(CHANGE_INTEGER, function (integer) {
+		return {
+			integer: integer,
+			numeral: convertIntegerToNumeral(integer)
+		};
+	});
+	
+	var convertNumeralToInteger = function convertNumeralToInteger(numeral) {
+		var arr = numeral.split('');
+	
+		arr.forEach(function (num, i) {
+			switch (num) {
+				case 'I':
+					arr[i] = 1;
+					break;
+				case 'V':
+					arr[i] = 5;
+					break;
+				case 'X':
+					arr[i] = 10;
+					break;
+				case 'L':
+					arr[i] = 50;
+					break;
+				case 'C':
+					arr[i] = 100;
+					break;
+				case 'D':
+					arr[i] = 500;
+					break;
+				case 'M':
+					arr[i] = 1000;
+					break;
+			}
+		});
+	
+		return arr.reduce(function (acc, val, i, arr) {
+			if (i < arr.length - 1) {
+				if (val < arr[i + 1]) {
+					return acc -= val;
+				} else {
+					return acc += val;
+				}
+			} else {
+				return acc += val;
+			}
+		}, 0);
+	};
+	
+	var convertIntegerToNumeral = function convertIntegerToNumeral(integer) {
+	
+		var result = '';
+		var lookup = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
+	
+		for (var i in lookup) {
+			while (integer >= lookup[i]) {
+				result += i;
+				integer -= lookup[i];
+			}
+		}
+	
+		return result;
+	};
+	
+	/* ============================================================================
+	REDUCER --- ACTION HANDLER
+	============================================================================= */
+	
+	exports.default = (0, _reduxActions.handleActions)((_handleActions = {}, _defineProperty(_handleActions, CHANGE_NUMERAL, function (state, action) {
+		return _extends({}, state, {
+			numeral: action.payload.numeral,
+			integer: action.payload.integer
+		});
+	}), _defineProperty(_handleActions, CHANGE_INTEGER, function (state, action) {
+		return _extends({}, state, {
+			numeral: action.payload.numeral,
+			integer: action.payload.integer
 		});
 	}), _handleActions), init);
 
